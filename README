@@ -1,0 +1,252 @@
+NAME
+    Calendar::Indonesia::Holiday - List Indonesian public holidays
+
+VERSION
+    version 0.01
+
+SYNOPSIS
+     use Calendar::Indonesia::Holiday qw(list_id_holidays);
+
+     # list Indonesian holidays for the year 2011, without the joint leave days
+     # ("cuti bersama"), show only the dates
+
+     my $res = list_id_holidays(year => 2011, is_joint_leave=>0);
+     # sample result
+     [200, "OK", [
+       '2011-01-01',
+       '2011-02-03',
+       '2011-02-16',
+       '2011-03-05',
+       '2011-04-22',
+       '2011-05-17',
+       '2011-06-02',
+       '2011-06-29',
+       '2011-08-17',
+       '2011-08-31',
+       '2011-09-01',
+       '2011-11-07',
+       '2011-11-27',
+       '2011-12-25',
+     ]];
+
+     # list religious Indonesian holidays, show full details
+     my $res = list_id_holidays(year => 2011,
+                                has_tags => ['religious'], detail=>1);
+
+     # sample result
+     [200, "OK", [
+       {date       => '2011-02-16',
+        day        => 16,
+        month      => 2,
+        year       => 2011,
+        id_name    => 'Maulid Nabi Muhammad',
+        en_name    => 'Mawlid',
+        en_aliases => ['Mawlid An-Nabi'],
+        id_aliases => ['Maulud'],
+        is_holiday => 1,
+        tags       => [qw/religious religion=islam calendar=lunar/],
+       },
+       ...
+     ]];
+
+     # check whether 2011-02-16 is a holiday
+     my $res = list_id_holidays(date => '2011-02-16');
+     print "2011-02-16 is a holiday\n" if @{$res->[2]};
+
+DESCRIPTION
+    This module provides two functions: list_id_holidays.
+
+    This module uses Log::Any logging framework.
+
+    This module's functions has Sub::Spec specs.
+
+FUNCTIONS
+    None are exported by default, but they are exportable.
+
+  list_id_holidays(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
+    List Indonesian holidays in calendar.
+
+    List holidays and joint leave days ("cuti bersama").
+
+    Contains data from years 2008 to 2012 (joint leave days until 2012).
+
+    Returns a 3-element arrayref. STATUS_CODE is 200 on success, or an error
+    code between 3xx-5xx (just like in HTTP). ERR_MSG is a string containing
+    error message, RESULT is the actual result.
+
+    Field selection arguments ("*" denotes required arguments):
+
+    *   detail => *bool* (default 0)
+
+        Return detailed data (all fields).
+
+    *   fields => *array*
+
+        Select fields to return.
+
+        When off, will return an array of values without field names
+        (array/list).
+
+        Default is off, will be turned on by default when 'fields' or
+        'detail' options are specified.
+
+    *   show_field_names => *bool*
+
+        Show field names in result (as hash/assoc).
+
+        When off, will return an array of values without field names
+        (array/list). When on, will return an array of field names and
+        values (hash/associative array).
+
+    Filter arguments:
+
+    *   q => *str*
+
+        Search.
+
+    Filter for date arguments:
+
+    *   date => *str*
+
+        Only return results having certain value of date.
+
+    *   date_contain => *str*
+
+        Only return results with date containing certain text.
+
+    *   date_match => *str*
+
+        Only return results with date matching specified regex.
+
+    *   date_not_contain => *str*
+
+        Only return results with date not containing certain text.
+
+    *   date_not_match => *str*
+
+        Only return results with date matching specified regex.
+
+    *   max_date => *str*
+
+        Only return results having a certain maximum value of date.
+
+    *   min_date => *str*
+
+        Only return results having a certain minimum value of date.
+
+    Filter for day arguments:
+
+    *   day => *int*
+
+        Only return results having certain value of day.
+
+    *   max_day => *int*
+
+        Only return results having a certain maximum value of day.
+
+    *   min_day => *int*
+
+        Only return results having a certain minimum value of day.
+
+    Filter for dow arguments:
+
+    *   dow => *int*
+
+        Only return results having certain value of dow.
+
+    *   max_dow => *int*
+
+        Only return results having a certain maximum value of dow.
+
+    *   min_dow => *int*
+
+        Only return results having a certain minimum value of dow.
+
+    Filter for is_holiday arguments:
+
+    *   is_holiday => *bool* (default 0)
+
+        Only return results having a true is_holiday value.
+
+    Filter for is_joint_leave arguments:
+
+    *   is_joint_leave => *bool* (default 0)
+
+        Only return results having a true is_joint_leave value.
+
+    Filter for month arguments:
+
+    *   max_month => *int*
+
+        Only return results having a certain maximum value of month.
+
+    *   min_month => *int*
+
+        Only return results having a certain minimum value of month.
+
+    *   month => *int*
+
+        Only return results having certain value of month.
+
+    Filter for tags arguments:
+
+    *   has_tags => *array*
+
+        Only return results having specified values in tags.
+
+    *   lacks_tags => *array*
+
+        Only return results not having specified values in tags.
+
+    Filter for year arguments:
+
+    *   max_year => *int*
+
+        Only return results having a certain maximum value of year.
+
+    *   min_year => *int*
+
+        Only return results having a certain minimum value of year.
+
+    *   year => *int*
+
+        Only return results having certain value of year.
+
+    Order arguments:
+
+    *   random => *bool* (default 0)
+
+        If on, return result in random order.
+
+    *   sort => *str*
+
+        Order data according to certain fields.
+
+        A list of field names separated by comma. Each field can be prefixed
+        with '-' to specify descending order instead of the default
+        ascending.
+
+    Paging arguments:
+
+    *   result_limit => *int*
+
+        Only return a certain number of results.
+
+    *   result_start => *int* (default 1)
+
+        Only return results from a certain position.
+
+FAQ
+SEE ALSO
+    This API is available on GudangAPI, http://www.gudangapi.com/ , under
+    "calendar/id" module. To use GudangAPI, you can use WWW::GudangAPI.
+
+AUTHOR
+    Steven Haryanto <stevenharyanto@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2011 by Steven Haryanto.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
