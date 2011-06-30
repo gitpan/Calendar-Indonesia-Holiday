@@ -1,6 +1,6 @@
 package Calendar::Indonesia::Holiday;
 BEGIN {
-  $Calendar::Indonesia::Holiday::VERSION = '0.01';
+  $Calendar::Indonesia::Holiday::VERSION = '0.02';
 }
 # ABSTRACT: List Indonesian public holidays
 
@@ -15,7 +15,11 @@ use Sub::Spec::Gen::ReadTable qw(gen_read_table_func);
 
 use Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(list_id_holidays is_id_holiday);
+our @EXPORT_OK = qw(
+                       list_id_holidays
+                       enum_id_workdays
+                       count_id_workdays
+               );
 
 our %SPEC;
 
@@ -189,7 +193,7 @@ sub _make_jl_tentative {
 
 my %year_holidays;
 
-# ditetapkan 5 feb 2008
+# decreed feb 5, 2008
 my $hijra2008a;
 my $eidulf2008;
 $year_holidays{2008} = [
@@ -214,7 +218,7 @@ $year_holidays{2008} = [
     _jointlv     ({day => 26, month => 12}, {holiday=>$christmas}),
 ];
 
-# ditetapkan 9 juni 2008
+# decreed juni 9, 2008
 my $eidulf2009;
 $year_holidays{2009} = [
     _h_chnewyear ({day => 26, month =>  1}, {hyear=>2560}),
@@ -236,7 +240,7 @@ $year_holidays{2009} = [
     _jointlv     ({day => 24, month => 12}, {holiday=>$christmas}),
 ];
 
-# ditetapkan x xxx 2009
+# decreed aug 7, 2009
 my $eidulf2010;
 $year_holidays{2010} = [
     _h_chnewyear ({day => 14, month =>  2}, {hyear=>2561}),
@@ -257,7 +261,7 @@ $year_holidays{2010} = [
     _jointlv     ({day => 24, month => 12}, {holiday=>$christmas}),
 ];
 
-# ditetapkan x xxx 2010
+# decreed jun 15, 2010
 my $eidulf2011;
 $year_holidays{2011} = [
     _h_chnewyear ({day =>  3, month =>  2}, {hyear=>2562}),
@@ -279,7 +283,7 @@ $year_holidays{2011} = [
     _jointlv     ({day => 26, month => 12}, {holiday=>$christmas}),
 ];
 
-# ditetapkan x xxx 2011
+# decreed may 16, 2011
 my $eidulf2012;
 $year_holidays{2012} = _make_jl_tentative [
     _h_chnewyear ({day => 23, month =>  1}, {hyear=>2563}),
@@ -299,8 +303,6 @@ $year_holidays{2012} = _make_jl_tentative [
     _jointlv     ({day => 22, month =>  8}, {holiday=>$eidulf2012}),
     _jointlv     ({day => 26, month => 12}, {holiday=>$christmas}),
 ];
-
-# data mwn sd 2020, tapi masih missing waisyak
 
 my @years     = sort keys %year_holidays;
 our $min_year = $years[0];
@@ -424,6 +426,75 @@ no warnings;
 *list_id_holidays = $res->[2]{code};
 use warnings;
 
+$SPEC{enum_id_workdays} = {
+    summary => 'Enumerate working days in a certain period (month/year)',
+    description => <<'_',
+
+Working day is defined as day that is not Saturday*/Sunday/holiday/joint leave
+days*. If work_saturdays is set to true, Saturdays are also counted as working
+days. If observe_joint_leaves is set to false, joint leave days are also counted
+as working days.
+
+_
+    args => {
+        month => ['int*' => {
+            # defaults to current month
+        }],
+        year => ['int*' => {
+            # defaults to current year
+        }],
+        work_saturdays => ['bool' => {
+            summary => 'If set to 1, Saturday is a working day',
+            default => 0,
+        }],
+        observe_joint_leaves => ['bool' => {
+            summary => 'If set to 0, do not observe joint leave as holidays',
+            default => 1,
+        }],
+    },
+};
+sub enum_id_workdays {
+    my %args = @_;
+
+    # XXX args
+    my $now = DateTime->now;
+    my $year  = $args{year}  // $now->year;
+    my $month = $args{month} // $now->month;
+    my $work_saturdays = $args{work_saturdays} // 0;
+    my $observe_joint_leaves = $args{observe_joint_leaves} // 1;
+    my $eom = DateTime->new(year=>$year, month=>$month, day=>1)->
+        add(months=>1)->subtract(days=>1);
+
+    my @args = (year=>$year, month=>$month);
+    push @args, (is_holiday=>1) if !$observe_joint_leaves;
+    my $res = list_id_holidays(@args);
+    return [500, "Can't list holidays: $res->[0] - $res->[1]"]
+        unless $res->[0] == 200;
+    #use Data::Dump; dd $res;
+
+    my @wd;
+    for my $day (1..$eom->day) {
+        my $dt = DateTime->new(day=>$day, month=>$month, year=>$year);
+        next if $dt->day_of_week == 7;
+        next if $dt->day_of_week == 6 && !$work_saturdays;
+        my $ymd = sprintf "%04d-%02d-%02d", $year, $month, $day;
+        next if $ymd ~~ @{$res->[2]};
+        push @wd, $ymd;
+    }
+
+    [200, "OK", \@wd];
+}
+
+$spec = clone($SPEC{enum_id_workdays});
+$spec->{summary} = "Count working days in a certain period (month/year)";
+$SPEC{count_id_workdays} = $spec;
+sub count_id_workdays {
+    my $res = enum_id_workdays(@_);
+    return $res unless $res->[0] == 200;
+    $res->[2] = @{$res->[2]};
+    $res;
+}
+
 1;
 
 
@@ -435,11 +506,15 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
- use Calendar::Indonesia::Holiday qw(list_id_holidays);
+ use Calendar::Indonesia::Holiday qw(
+     list_id_holidays
+     enum_id_workdays
+     count_id_workdays
+ );
 
  # list Indonesian holidays for the year 2011, without the joint leave days
  # ("cuti bersama"), show only the dates
@@ -487,9 +562,16 @@ version 0.01
  my $res = list_id_holidays(date => '2011-02-16');
  print "2011-02-16 is a holiday\n" if @{$res->[2]};
 
+ # enumerate working days for a certain period
+ my $res = enum_id_workdays(year=>2011, month=>7);
+
+ # idem, but returns a number instead. year/month defaults to current
+ # year/month.
+ my $res = count_id_workdays();
+
 =head1 DESCRIPTION
 
-This module provides two functions: B<list_id_holidays>.
+This module provides one function: B<list_id_holidays>.
 
 This module uses L<Log::Any> logging framework.
 
@@ -498,6 +580,70 @@ This module's functions has L<Sub::Spec> specs.
 =head1 FUNCTIONS
 
 None are exported by default, but they are exportable.
+
+=head2 count_id_workdays(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
+
+
+Count working days in a certain period (month/year).
+
+Working day is defined as day that is not Saturday*/Sunday/holiday/joint leave
+days*. If work_saturdays is set to true, Saturdays are also counted as working
+days. If observe_joint_leaves is set to false, joint leave days are also counted
+as working days.
+
+Returns a 3-element arrayref. STATUS_CODE is 200 on success, or an error code
+between 3xx-5xx (just like in HTTP). ERR_MSG is a string containing error
+message, RESULT is the actual result.
+
+Arguments (C<*> denotes required arguments):
+
+=over 4
+
+=item * B<month>* => I<int>
+
+=item * B<observe_joint_leaves> => I<bool> (default C<1>)
+
+If set to 0, do not observe joint leave as holidays.
+
+=item * B<work_saturdays> => I<bool> (default C<0>)
+
+If set to 1, Saturday is a working day.
+
+=item * B<year>* => I<int>
+
+=back
+
+=head2 enum_id_workdays(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
+
+
+Enumerate working days in a certain period (month/year).
+
+Working day is defined as day that is not Saturday*/Sunday/holiday/joint leave
+days*. If work_saturdays is set to true, Saturdays are also counted as working
+days. If observe_joint_leaves is set to false, joint leave days are also counted
+as working days.
+
+Returns a 3-element arrayref. STATUS_CODE is 200 on success, or an error code
+between 3xx-5xx (just like in HTTP). ERR_MSG is a string containing error
+message, RESULT is the actual result.
+
+Arguments (C<*> denotes required arguments):
+
+=over 4
+
+=item * B<month>* => I<int>
+
+=item * B<observe_joint_leaves> => I<bool> (default C<1>)
+
+If set to 0, do not observe joint leave as holidays.
+
+=item * B<work_saturdays> => I<bool> (default C<0>)
+
+If set to 1, Saturday is a working day.
+
+=item * B<year>* => I<int>
+
+=back
 
 =head2 list_id_holidays(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
 
@@ -721,6 +867,27 @@ Only return results from a certain position.
 =back
 
 =head1 FAQ
+
+=head2 What is "joint leave"?
+
+Workers are normally granted 12 days of paid leave per year. They are free to
+spend it on whichever days they want. The joint leave ("cuti bersama") is a
+government program of recent years (since 2008) to recommend that some of these
+leave days be spent together nationally on certain days, especially during
+Lebaran (Eid Ul-Fitr). It is not mandated, but many do follow it anyway, e.g.
+government civil workers, banks, etc. I am marking joint leave days with
+is_joint_leave=1 and is_holiday=0, while the holidays themselves with
+is_holiday=1, so you can differentiate/select both/either one.
+
+=head2 Holidays before 2008?
+
+Will be provided if there is demand and data source.
+
+=head2 Why only provide data up to (current year)+1?
+
+Some religious holidays, especially Vesakha, are not determined yet. Joint leave
+days are also usually decreed by the government in May/June of the preceding
+year.
 
 =head1 SEE ALSO
 
