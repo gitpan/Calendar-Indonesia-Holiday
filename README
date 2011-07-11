@@ -2,7 +2,7 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    version 0.02
+    version 0.03
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -65,7 +65,7 @@ SYNOPSIS
      my $res = count_id_workdays();
 
 DESCRIPTION
-    This module provides one function: list_id_holidays.
+    This module provides functions to list Indonesian holidays.
 
     This module uses Log::Any logging framework.
 

@@ -1,6 +1,6 @@
 package Calendar::Indonesia::Holiday;
 BEGIN {
-  $Calendar::Indonesia::Holiday::VERSION = '0.02';
+  $Calendar::Indonesia::Holiday::VERSION = '0.03';
 }
 # ABSTRACT: List Indonesian public holidays
 
@@ -506,7 +506,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 SYNOPSIS
 
@@ -571,7 +571,7 @@ version 0.02
 
 =head1 DESCRIPTION
 
-This module provides one function: B<list_id_holidays>.
+This module provides functions to list Indonesian holidays.
 
 This module uses L<Log::Any> logging framework.
 

@@ -6,6 +6,7 @@ MANIFEST.SKIP
 META.yml
 README
 dist.ini
+lib/Calendar/ID/Holiday.pm
 lib/Calendar/Indonesia/Holiday.pm
 t/00-compile.t
 t/01-basics.t
