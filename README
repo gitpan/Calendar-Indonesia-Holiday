@@ -2,7 +2,7 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    version 0.03
+    version 0.04
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -75,7 +75,7 @@ FUNCTIONS
     None are exported by default, but they are exportable.
 
   count_id_workdays(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
-    Count working days in a certain period (month/year).
+    Count working days for a certain period.
 
     Working day is defined as day that is not Saturday*/Sunday/holiday/joint
     leave days*. If work_saturdays is set to true, Saturdays are also
@@ -88,20 +88,30 @@ FUNCTIONS
 
     Arguments ("*" denotes required arguments):
 
-    *   month* => *int*
+    *   end_date* => *str*
+
+        End date.
+
+        Defaults to end of current month. Either a string in the form of
+        "YYYY-MM-DD", or a DateTime object, is accepted.
 
     *   observe_joint_leaves => *bool* (default 1)
 
         If set to 0, do not observe joint leave as holidays.
 
+    *   start_date* => *str*
+
+        Starting date.
+
+        Defaults to start of current month. Either a string in the form of
+        "YYYY-MM-DD", or a DateTime object, is accepted.
+
     *   work_saturdays => *bool* (default 0)
 
         If set to 1, Saturday is a working day.
-
-    *   year* => *int*
 
   enum_id_workdays(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
-    Enumerate working days in a certain period (month/year).
+    Enumerate working days for a certain period.
 
     Working day is defined as day that is not Saturday*/Sunday/holiday/joint
     leave days*. If work_saturdays is set to true, Saturdays are also
@@ -114,17 +124,27 @@ FUNCTIONS
 
     Arguments ("*" denotes required arguments):
 
-    *   month* => *int*
+    *   end_date* => *str*
+
+        End date.
+
+        Defaults to end of current month. Either a string in the form of
+        "YYYY-MM-DD", or a DateTime object, is accepted.
 
     *   observe_joint_leaves => *bool* (default 1)
 
         If set to 0, do not observe joint leave as holidays.
 
+    *   start_date* => *str*
+
+        Starting date.
+
+        Defaults to start of current month. Either a string in the form of
+        "YYYY-MM-DD", or a DateTime object, is accepted.
+
     *   work_saturdays => *bool* (default 0)
 
         If set to 1, Saturday is a working day.
-
-    *   year* => *int*
 
   list_id_holidays(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
     List Indonesian holidays in calendar.

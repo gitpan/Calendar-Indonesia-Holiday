@@ -1,9 +1,12 @@
 package Calendar::ID::Holiday;
 BEGIN {
-  $Calendar::ID::Holiday::VERSION = '0.03';
+  $Calendar::ID::Holiday::VERSION = '0.04';
 }
 use Calendar::Indonesia::Holiday;
-our %SPEC = %Calendar::Indonesia::Holiday::SPEC;
+our @ISA       = @Calendar::Indonesia::Holiday::ISA;
+our @EXPORT    = @Calendar::Indonesia::Holiday::EXPORT;
+our @EXPORT_OK = @Calendar::Indonesia::Holiday::EXPORT_OK;
+our %SPEC      = %Calendar::Indonesia::Holiday::SPEC;
 for my $f (keys %SPEC) {
     *{$f} = \&{"Calendar::Indonesia::Holiday::$f"};
 }
@@ -20,7 +23,7 @@ Calendar::ID::Holiday - Alias for Calendar::Indonesia::Holiday
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 AUTHOR
 
