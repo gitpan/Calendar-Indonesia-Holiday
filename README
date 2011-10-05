@@ -2,7 +2,7 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    version 0.04
+    version 0.05
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -82,6 +82,8 @@ FUNCTIONS
     counted as working days. If observe_joint_leaves is set to false, joint
     leave days are also counted as working days.
 
+    $AVAILABLE_YEARS.
+
     Returns a 3-element arrayref. STATUS_CODE is 200 on success, or an error
     code between 3xx-5xx (just like in HTTP). ERR_MSG is a string containing
     error message, RESULT is the actual result.
@@ -118,6 +120,8 @@ FUNCTIONS
     counted as working days. If observe_joint_leaves is set to false, joint
     leave days are also counted as working days.
 
+    $AVAILABLE_YEARS.
+
     Returns a 3-element arrayref. STATUS_CODE is 200 on success, or an error
     code between 3xx-5xx (just like in HTTP). ERR_MSG is a string containing
     error message, RESULT is the actual result.
@@ -151,7 +155,7 @@ FUNCTIONS
 
     List holidays and joint leave days ("cuti bersama").
 
-    Contains data from years 2008 to 2012 (joint leave days until 2012).
+    Contains data from years 2002 to 2012 (joint leave days until 2012)..
 
     Returns a 3-element arrayref. STATUS_CODE is 200 on success, or an error
     code between 3xx-5xx (just like in HTTP). ERR_MSG is a string containing
@@ -166,12 +170,6 @@ FUNCTIONS
     *   fields => *array*
 
         Select fields to return.
-
-        When off, will return an array of values without field names
-        (array/list).
-
-        Default is off, will be turned on by default when 'fields' or
-        'detail' options are specified.
 
     *   show_field_names => *bool*
 
@@ -323,7 +321,7 @@ FAQ
   What is "joint leave"?
     Workers are normally granted 12 days of paid leave per year. They are
     free to spend it on whichever days they want. The joint leave ("cuti
-    bersama") is a government program of recent years (since 2008) to
+    bersama") is a government program of recent years (since 2002) to
     recommend that some of these leave days be spent together nationally on
     certain days, especially during Lebaran (Eid Ul-Fitr). It is not
     mandated, but many do follow it anyway, e.g. government civil workers,
@@ -331,10 +329,10 @@ FAQ
     is_holiday=0, while the holidays themselves with is_holiday=1, so you
     can differentiate/select both/either one.
 
-  Holidays before 2008?
+  Holidays before 2002?
     Will be provided if there is demand and data source.
 
-  Why only provide data up to (current year)+1?
+  Holidays after (current year)+1?
     Some religious holidays, especially Vesakha, are not determined yet.
     Joint leave days are also usually decreed by the government in May/June
     of the preceding year.

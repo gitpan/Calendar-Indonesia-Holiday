@@ -1,6 +1,6 @@
 package Calendar::ID::Holiday;
 BEGIN {
-  $Calendar::ID::Holiday::VERSION = '0.04';
+  $Calendar::ID::Holiday::VERSION = '0.05';
 }
 use Calendar::Indonesia::Holiday;
 our @ISA       = @Calendar::Indonesia::Holiday::ISA;
@@ -23,7 +23,7 @@ Calendar::ID::Holiday - Alias for Calendar::Indonesia::Holiday
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 AUTHOR
 
