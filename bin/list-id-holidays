@@ -1,0 +1,59 @@
+#!/usr/bin/perl
+
+# workaround for dzil
+package list_id_holidays;
+BEGIN {
+  $list_id_holidays::VERSION = '0.06';
+}
+
+use 5.010;
+use strict;
+use warnings;
+
+use Sub::Spec::CmdLine qw(run);
+
+# VERSION
+
+run(module => 'Calendar::Indonesia::Holiday', sub=>'list_id_holidays');
+
+1;
+# ABSTRACT: List Indonesian holidays
+
+
+__END__
+=pod
+
+=head1 NAME
+
+list_id_holidays - List Indonesian holidays
+
+=head1 VERSION
+
+version 0.06
+
+=head1 SYNOPSIS
+
+ # List Indonesian holidays for year 2011 (without the joint leaves)
+ $ list-id-holidays --detail --nois-joint-leave --year 2011
+
+ # Show available options
+ $ list-id-holidays --help
+
+=head1 DESCRIPTION
+
+This is a command-line interface for the <list_id_holidays> function in
+L<Calendar::Indonesia::Holiday>.
+
+=head1 AUTHOR
+
+Steven Haryanto <stevenharyanto@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Steven Haryanto.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+

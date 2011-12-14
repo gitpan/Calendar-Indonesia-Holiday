@@ -17,10 +17,11 @@ requires:
   Data::Clone: 0
   DateTime: 0
   Sub::Spec: 0.13
+  Sub::Spec::CmdLine: 0
   Sub::Spec::Gen::ReadTable: 0.02
   Test::More: 0.96
   perl: 5.010000
 resources:
   homepage: http://search.cpan.org/dist/Calendar-Indonesia-Holiday/
   repository: http://github.com/sharyanto/perl-Calendar-Indonesia-Holiday
-version: 0.05
+version: 0.06

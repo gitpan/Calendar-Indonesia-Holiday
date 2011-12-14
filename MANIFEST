@@ -5,6 +5,7 @@ MANIFEST
 MANIFEST.SKIP
 META.yml
 README
+bin/list-id-holidays
 dist.ini
 lib/Calendar/ID/Holiday.pm
 lib/Calendar/Indonesia/Holiday.pm

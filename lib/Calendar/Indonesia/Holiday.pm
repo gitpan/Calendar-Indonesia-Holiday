@@ -1,6 +1,6 @@
 package Calendar::Indonesia::Holiday;
 BEGIN {
-  $Calendar::Indonesia::Holiday::VERSION = '0.05';
+  $Calendar::Indonesia::Holiday::VERSION = '0.06';
 }
 # ABSTRACT: List Indonesian public holidays
 
@@ -717,7 +717,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
@@ -1121,8 +1121,7 @@ year.
 
 =head1 SEE ALSO
 
-This API is available on GudangAPI, http://www.gudangapi.com/ , under
-"calendar/id" module. To use GudangAPI, you can use L<WWW::GudangAPI>.
+This API will also be available on GudangAPI, http://gudangapi.com/
 
 =head1 AUTHOR
 
