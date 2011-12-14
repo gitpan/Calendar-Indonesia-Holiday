@@ -24,4 +24,4 @@ requires:
 resources:
   homepage: http://search.cpan.org/dist/Calendar-Indonesia-Holiday/
   repository: http://github.com/sharyanto/perl-Calendar-Indonesia-Holiday
-version: 0.06
+version: 0.07

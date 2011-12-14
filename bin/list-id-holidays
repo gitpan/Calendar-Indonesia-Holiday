@@ -3,7 +3,7 @@
 # workaround for dzil
 package list_id_holidays;
 BEGIN {
-  $list_id_holidays::VERSION = '0.06';
+  $list_id_holidays::VERSION = '0.07';
 }
 
 use 5.010;
@@ -29,7 +29,7 @@ list_id_holidays - List Indonesian holidays
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 

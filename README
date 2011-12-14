@@ -2,7 +2,7 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    version 0.06
+    version 0.07
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -43,8 +43,8 @@ SYNOPSIS
         day        => 16,
         month      => 2,
         year       => 2011,
-        id_name    => 'Maulid Nabi Muhammad',
-        en_name    => 'Mawlid',
+        ind_name    => 'Maulid Nabi Muhammad',
+        eng_name    => 'Mawlid',
         en_aliases => ['Mawlid An-Nabi'],
         id_aliases => ['Maulud'],
         is_holiday => 1,
