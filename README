@@ -2,7 +2,7 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    version 0.07
+    version 0.08
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -35,7 +35,7 @@ SYNOPSIS
 
      # list religious Indonesian holidays, show full details
      my $res = list_id_holidays(year => 2011,
-                                has_tags => ['religious'], detail=>1);
+                                "tags.has" => ['religious'], detail=>1);
 
      # sample result
      [200, "OK", [
@@ -69,253 +69,7 @@ DESCRIPTION
 
     This module uses Log::Any logging framework.
 
-    This module's functions has Sub::Spec specs.
-
-FUNCTIONS
-    None are exported by default, but they are exportable.
-
-  count_id_workdays(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
-    Count working days for a certain period.
-
-    Working day is defined as day that is not Saturday*/Sunday/holiday/joint
-    leave days*. If work_saturdays is set to true, Saturdays are also
-    counted as working days. If observe_joint_leaves is set to false, joint
-    leave days are also counted as working days.
-
-    $AVAILABLE_YEARS.
-
-    Returns a 3-element arrayref. STATUS_CODE is 200 on success, or an error
-    code between 3xx-5xx (just like in HTTP). ERR_MSG is a string containing
-    error message, RESULT is the actual result.
-
-    Arguments ("*" denotes required arguments):
-
-    *   end_date* => *str*
-
-        End date.
-
-        Defaults to end of current month. Either a string in the form of
-        "YYYY-MM-DD", or a DateTime object, is accepted.
-
-    *   observe_joint_leaves => *bool* (default 1)
-
-        If set to 0, do not observe joint leave as holidays.
-
-    *   start_date* => *str*
-
-        Starting date.
-
-        Defaults to start of current month. Either a string in the form of
-        "YYYY-MM-DD", or a DateTime object, is accepted.
-
-    *   work_saturdays => *bool* (default 0)
-
-        If set to 1, Saturday is a working day.
-
-  enum_id_workdays(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
-    Enumerate working days for a certain period.
-
-    Working day is defined as day that is not Saturday*/Sunday/holiday/joint
-    leave days*. If work_saturdays is set to true, Saturdays are also
-    counted as working days. If observe_joint_leaves is set to false, joint
-    leave days are also counted as working days.
-
-    $AVAILABLE_YEARS.
-
-    Returns a 3-element arrayref. STATUS_CODE is 200 on success, or an error
-    code between 3xx-5xx (just like in HTTP). ERR_MSG is a string containing
-    error message, RESULT is the actual result.
-
-    Arguments ("*" denotes required arguments):
-
-    *   end_date* => *str*
-
-        End date.
-
-        Defaults to end of current month. Either a string in the form of
-        "YYYY-MM-DD", or a DateTime object, is accepted.
-
-    *   observe_joint_leaves => *bool* (default 1)
-
-        If set to 0, do not observe joint leave as holidays.
-
-    *   start_date* => *str*
-
-        Starting date.
-
-        Defaults to start of current month. Either a string in the form of
-        "YYYY-MM-DD", or a DateTime object, is accepted.
-
-    *   work_saturdays => *bool* (default 0)
-
-        If set to 1, Saturday is a working day.
-
-  list_id_holidays(%args) -> [STATUS_CODE, ERR_MSG, RESULT]
-    List Indonesian holidays in calendar.
-
-    List holidays and joint leave days ("cuti bersama").
-
-    Contains data from years 2002 to 2012 (joint leave days until 2012)..
-
-    Returns a 3-element arrayref. STATUS_CODE is 200 on success, or an error
-    code between 3xx-5xx (just like in HTTP). ERR_MSG is a string containing
-    error message, RESULT is the actual result.
-
-    Field selection arguments ("*" denotes required arguments):
-
-    *   detail => *bool* (default 0)
-
-        Return detailed data (all fields).
-
-    *   fields => *array*
-
-        Select fields to return.
-
-    *   show_field_names => *bool*
-
-        Show field names in result (as hash/assoc).
-
-        When off, will return an array of values without field names
-        (array/list). When on, will return an array of field names and
-        values (hash/associative array).
-
-    Filter arguments:
-
-    *   q => *str*
-
-        Search.
-
-    Filter for date arguments:
-
-    *   date => *str*
-
-        Only return results having certain value of date.
-
-    *   date_contain => *str*
-
-        Only return results with date containing certain text.
-
-    *   date_match => *str*
-
-        Only return results with date matching specified regex.
-
-    *   date_not_contain => *str*
-
-        Only return results with date not containing certain text.
-
-    *   date_not_match => *str*
-
-        Only return results with date matching specified regex.
-
-    *   max_date => *str*
-
-        Only return results having a certain maximum value of date.
-
-    *   min_date => *str*
-
-        Only return results having a certain minimum value of date.
-
-    Filter for day arguments:
-
-    *   day => *int*
-
-        Only return results having certain value of day.
-
-    *   max_day => *int*
-
-        Only return results having a certain maximum value of day.
-
-    *   min_day => *int*
-
-        Only return results having a certain minimum value of day.
-
-    Filter for dow arguments:
-
-    *   dow => *int*
-
-        Only return results having certain value of dow.
-
-    *   max_dow => *int*
-
-        Only return results having a certain maximum value of dow.
-
-    *   min_dow => *int*
-
-        Only return results having a certain minimum value of dow.
-
-    Filter for is_holiday arguments:
-
-    *   is_holiday => *bool* (default 0)
-
-        Only return results having a true is_holiday value.
-
-    Filter for is_joint_leave arguments:
-
-    *   is_joint_leave => *bool* (default 0)
-
-        Only return results having a true is_joint_leave value.
-
-    Filter for month arguments:
-
-    *   max_month => *int*
-
-        Only return results having a certain maximum value of month.
-
-    *   min_month => *int*
-
-        Only return results having a certain minimum value of month.
-
-    *   month => *int*
-
-        Only return results having certain value of month.
-
-    Filter for tags arguments:
-
-    *   has_tags => *array*
-
-        Only return results having specified values in tags.
-
-    *   lacks_tags => *array*
-
-        Only return results not having specified values in tags.
-
-    Filter for year arguments:
-
-    *   max_year => *int*
-
-        Only return results having a certain maximum value of year.
-
-    *   min_year => *int*
-
-        Only return results having a certain minimum value of year.
-
-    *   year => *int*
-
-        Only return results having certain value of year.
-
-    Order arguments:
-
-    *   random => *bool* (default 0)
-
-        If on, return result in random order.
-
-    *   sort => *str*
-
-        Order data according to certain fields.
-
-        A list of field names separated by comma. Each field can be prefixed
-        with '-' to specify descending order instead of the default
-        ascending.
-
-    Paging arguments:
-
-    *   result_limit => *int*
-
-        Only return a certain number of results.
-
-    *   result_start => *int* (default 1)
-
-        Only return results from a certain position.
+    This module has Rinci metadata.
 
 FAQ
   What is "joint leave"?
@@ -340,11 +94,345 @@ FAQ
 SEE ALSO
     This API will also be available on GudangAPI, http://gudangapi.com/
 
+FUNCTIONS
+  count_id_workdays(%args) -> [status, msg, result, meta]
+    Count working days for a certain period.
+
+    Working day is defined as day that is not Saturday/Sunday/holiday/joint
+    leave days. If worksaturdays is set to true, Saturdays are also counted
+    as working days. If observejoint_leaves is set to false, joint leave
+    days are also counted as working days.
+
+    Contains data from years 2002 to 2012 (joint leave days until 2012).
+
+    Arguments ('*' denotes required arguments):
+
+    *   end_date* => *str*
+
+        End date.
+
+        Defaults to end of current month. Either a string in the form of
+        "YYYY-MM-DD", or a DateTime object, is accepted.
+
+    *   observe_joint_leaves => *bool* (default: 1)
+
+        If set to 0, do not observe joint leave as holidays.
+
+    *   start_date* => *str*
+
+        Starting date.
+
+        Defaults to start of current month. Either a string in the form of
+        "YYYY-MM-DD", or a DateTime object, is accepted.
+
+    *   work_saturdays => *bool* (default: 0)
+
+        If set to 1, Saturday is a working day.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  enum_id_workdays(%args) -> [status, msg, result, meta]
+    Enumerate working days for a certain period.
+
+    Working day is defined as day that is not Saturday/Sunday/holiday/joint
+    leave days. If worksaturdays is set to true, Saturdays are also counted
+    as working days. If observejoint_leaves is set to false, joint leave
+    days are also counted as working days.
+
+    Contains data from years 2002 to 2012 (joint leave days until 2012).
+
+    Arguments ('*' denotes required arguments):
+
+    *   end_date* => *str*
+
+        End date.
+
+        Defaults to end of current month. Either a string in the form of
+        "YYYY-MM-DD", or a DateTime object, is accepted.
+
+    *   observe_joint_leaves => *bool* (default: 1)
+
+        If set to 0, do not observe joint leave as holidays.
+
+    *   start_date* => *str*
+
+        Starting date.
+
+        Defaults to start of current month. Either a string in the form of
+        "YYYY-MM-DD", or a DateTime object, is accepted.
+
+    *   work_saturdays => *bool* (default: 0)
+
+        If set to 1, Saturday is a working day.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  list_id_holidays(%args) -> [status, msg, result, meta]
+    List Indonesian holidays in calendar.
+
+    List holidays and joint leave days ("cuti bersama").
+
+    Contains data from years 2002 to 2012 (joint leave days until 2012).
+
+    Arguments ('*' denotes required arguments):
+
+    *   date* => *str*
+
+        Only return records where the 'date' field equals specified value.
+
+    *   date.contains => *str*
+
+        Only return records where the 'date' field contains specified text.
+
+    *   date.is* => *str*
+
+        Only return records where the 'date' field equals specified value.
+
+    *   date.max => *str*
+
+        Only return records where the 'date' field is less than or equal to
+        specified value.
+
+    *   date.min => *array*
+
+        Only return records where the 'date' field is greater than or equal
+        to specified value.
+
+    *   date.not_contains => *str*
+
+        Only return records where the 'date' field does not contain a
+        certain text.
+
+    *   date.xmax => *str*
+
+        Only return records where the 'date' field is less than specified
+        value.
+
+    *   date.xmin => *array*
+
+        Only return records where the 'date' field is greater than specified
+        value.
+
+    *   day* => *int*
+
+        Only return records where the 'day' field equals specified value.
+
+    *   day.is* => *int*
+
+        Only return records where the 'day' field equals specified value.
+
+    *   day.max => *int*
+
+        Only return records where the 'day' field is less than or equal to
+        specified value.
+
+    *   day.min => *array*
+
+        Only return records where the 'day' field is greater than or equal
+        to specified value.
+
+    *   day.xmax => *int*
+
+        Only return records where the 'day' field is less than specified
+        value.
+
+    *   day.xmin => *array*
+
+        Only return records where the 'day' field is greater than specified
+        value.
+
+    *   detail => *bool* (default: 0)
+
+        Return array of full records instead of just ID fields.
+
+        By default, only the key (ID) field is returned per result entry.
+
+    *   dow* => *int*
+
+        Only return records where the 'dow' field equals specified value.
+
+    *   dow.is* => *int*
+
+        Only return records where the 'dow' field equals specified value.
+
+    *   dow.max => *int*
+
+        Only return records where the 'dow' field is less than or equal to
+        specified value.
+
+    *   dow.min => *array*
+
+        Only return records where the 'dow' field is greater than or equal
+        to specified value.
+
+    *   dow.xmax => *int*
+
+        Only return records where the 'dow' field is less than specified
+        value.
+
+    *   dow.xmin => *array*
+
+        Only return records where the 'dow' field is greater than specified
+        value.
+
+    *   fields* => *array*
+
+        Select fields to return.
+
+    *   is_holiday* => *bool*
+
+        Only return records where the 'is_holiday' field equals specified
+        value.
+
+    *   is_holiday.is* => *bool*
+
+        Only return records where the 'is_holiday' field equals specified
+        value.
+
+    *   is_joint_leave* => *bool*
+
+        Only return records where the 'is_joint_leave' field equals
+        specified value.
+
+    *   is_joint_leave.is* => *bool*
+
+        Only return records where the 'is_joint_leave' field equals
+        specified value.
+
+    *   month* => *int*
+
+        Only return records where the 'month' field equals specified value.
+
+    *   month.is* => *int*
+
+        Only return records where the 'month' field equals specified value.
+
+    *   month.max => *int*
+
+        Only return records where the 'month' field is less than or equal to
+        specified value.
+
+    *   month.min => *array*
+
+        Only return records where the 'month' field is greater than or equal
+        to specified value.
+
+    *   month.xmax => *int*
+
+        Only return records where the 'month' field is less than specified
+        value.
+
+    *   month.xmin => *array*
+
+        Only return records where the 'month' field is greater than
+        specified value.
+
+    *   q => *str* (default: 1)
+
+        Search.
+
+    *   random => *bool* (default: 0)
+
+        Return records in random order.
+
+    *   result_limit => *int*
+
+        Only return a certain number of records.
+
+    *   result_start => *int* (default: 1)
+
+        Only return starting from the n'th record.
+
+    *   sort => *str*
+
+        Order records according to certain field(s).
+
+        A list of field names separated by comma. Each field can be prefixed
+        with '-' to specify descending order instead of the default
+        ascending.
+
+    *   tags* => *array*
+
+        Only return records where the 'tags' field equals specified value.
+
+    *   tags.has => *array*
+
+        Only return records where the 'tags' field is an array/list which
+        contains specified value.
+
+    *   tags.is* => *array*
+
+        Only return records where the 'tags' field equals specified value.
+
+    *   tags.lacks => *array*
+
+        Only return records where the 'tags' field is an array/list which
+        does not contain specified value.
+
+    *   with_field_names => *bool*
+
+        Return field names in each record (as hash/associative array).
+
+        When enabled, function will return each record as hash/associative
+        array (field name => value pairs). Otherwise, function will return
+        each record as list/array (field value, field value, ...).
+
+    *   year* => *int*
+
+        Only return records where the 'year' field equals specified value.
+
+    *   year.is* => *int*
+
+        Only return records where the 'year' field equals specified value.
+
+    *   year.max => *int*
+
+        Only return records where the 'year' field is less than or equal to
+        specified value.
+
+    *   year.min => *array*
+
+        Only return records where the 'year' field is greater than or equal
+        to specified value.
+
+    *   year.xmax => *int*
+
+        Only return records where the 'year' field is less than specified
+        value.
+
+    *   year.xmin => *array*
+
+        Only return records where the 'year' field is greater than specified
+        value.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
 AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2011 by Steven Haryanto.
+    This software is copyright (c) 2012 by Steven Haryanto.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.

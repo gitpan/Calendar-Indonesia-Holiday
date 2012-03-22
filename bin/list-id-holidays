@@ -2,19 +2,17 @@
 
 # workaround for dzil
 package list_id_holidays;
-BEGIN {
-  $list_id_holidays::VERSION = '0.07';
-}
 
 use 5.010;
 use strict;
 use warnings;
 
-use Sub::Spec::CmdLine qw(run);
+use Perinci::CmdLine;
 
-# VERSION
+our $VERSION = '0.08'; # VERSION
 
-run(module => 'Calendar::Indonesia::Holiday', sub=>'list_id_holidays');
+Perinci::CmdLine->new(url => '/Calendar/Indonesia/Holiday/list_id_holidays')->
+    run;
 
 1;
 # ABSTRACT: List Indonesian holidays
@@ -29,7 +27,7 @@ list_id_holidays - List Indonesian holidays
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
@@ -50,7 +48,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Steven Haryanto.
+This software is copyright (c) 2012 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
