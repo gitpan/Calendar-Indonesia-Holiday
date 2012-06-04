@@ -2,7 +2,7 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    version 0.08
+    version 0.09
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -341,7 +341,7 @@ FUNCTIONS
         Only return records where the 'month' field is greater than
         specified value.
 
-    *   q => *str* (default: 1)
+    *   q => *str*
 
         Search.
 

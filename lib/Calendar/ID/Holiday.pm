@@ -1,6 +1,6 @@
 package Calendar::ID::Holiday;
 use Calendar::Indonesia::Holiday;
-our $VERSION = '0.08'; # VERSION
+our $VERSION = '0.09'; # VERSION
 our @ISA       = @Calendar::Indonesia::Holiday::ISA;
 our @EXPORT    = @Calendar::Indonesia::Holiday::EXPORT;
 our @EXPORT_OK = @Calendar::Indonesia::Holiday::EXPORT_OK;
@@ -21,7 +21,7 @@ Calendar::ID::Holiday - Alias for Calendar::Indonesia::Holiday
 
 =head1 VERSION
 
-version 0.08
+version 0.09
 
 =head1 FUNCTIONS
 
@@ -257,7 +257,7 @@ Only return records where the 'month' field is less than specified value.
 
 Only return records where the 'month' field is greater than specified value.
 
-=item * B<q> => I<str> (default: 1)
+=item * B<q> => I<str>
 
 Search.
 

@@ -17,7 +17,7 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.08'; # VERSION
+our $VERSION = '0.09'; # VERSION
 
 our %SPEC;
 
@@ -516,7 +516,7 @@ for my $year ($min_year .. $max_year) {
 my $res = gen_read_table_func(
     table_data => \@holidays,
     table_spec => {
-        columns => {
+        fields => {
             date => {
                 schema => 'str*',
                 index => 0,
@@ -729,7 +729,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.08
+version 0.09
 
 =head1 SYNOPSIS
 
@@ -1061,7 +1061,7 @@ Only return records where the 'month' field is less than specified value.
 
 Only return records where the 'month' field is greater than specified value.
 
-=item * B<q> => I<str> (default: 1)
+=item * B<q> => I<str>
 
 Search.
 
