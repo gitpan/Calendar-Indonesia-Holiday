@@ -2,7 +2,7 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    version 0.09
+    version 0.10
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -94,14 +94,19 @@ FAQ
 SEE ALSO
     This API will also be available on GudangAPI, http://gudangapi.com/
 
+DESCRIPTION
+    This module has Rinci metadata.
+
 FUNCTIONS
+    None are exported by default, but they are exportable.
+
   count_id_workdays(%args) -> [status, msg, result, meta]
     Count working days for a certain period.
 
-    Working day is defined as day that is not Saturday/Sunday/holiday/joint
-    leave days. If worksaturdays is set to true, Saturdays are also counted
-    as working days. If observejoint_leaves is set to false, joint leave
-    days are also counted as working days.
+    Working day is defined as day that is not Saturday*/Sunday/holiday/joint
+    leave days*. If work*saturdays is set to true, Saturdays are also
+    counted as working days. If observe*joint_leaves is set to false, joint
+    leave days are also counted as working days.
 
     Contains data from years 2002 to 2012 (joint leave days until 2012).
 
@@ -141,10 +146,10 @@ FUNCTIONS
   enum_id_workdays(%args) -> [status, msg, result, meta]
     Enumerate working days for a certain period.
 
-    Working day is defined as day that is not Saturday/Sunday/holiday/joint
-    leave days. If worksaturdays is set to true, Saturdays are also counted
-    as working days. If observejoint_leaves is set to false, joint leave
-    days are also counted as working days.
+    Working day is defined as day that is not Saturday*/Sunday/holiday/joint
+    leave days*. If work*saturdays is set to true, Saturdays are also
+    counted as working days. If observe*joint_leaves is set to false, joint
+    leave days are also counted as working days.
 
     Contains data from years 2002 to 2012 (joint leave days until 2012).
 

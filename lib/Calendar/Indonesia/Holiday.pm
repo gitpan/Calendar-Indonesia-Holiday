@@ -17,10 +17,9 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.09'; # VERSION
+our $VERSION = '0.10'; # VERSION
 
 our %SPEC;
-
 my @fixed_holidays = (
     my $newyear = {
         day        =>  1, month =>  1,
@@ -514,6 +513,7 @@ for my $year ($min_year .. $max_year) {
 }
 
 my $res = gen_read_table_func(
+    name => 'list_id_holidays',
     table_data => \@holidays,
     table_spec => {
         fields => {
@@ -603,10 +603,6 @@ List holidays and joint leave days ("cuti bersama").
 $AVAILABLE_YEARS
 
 _
-$SPEC{list_id_holidays} = $meta;
-no warnings;
-*list_id_holidays = $res->[2]{code};
-use warnings;
 
 sub _check_date_arg {
     my ($date) = @_;
@@ -729,7 +725,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 SYNOPSIS
 
@@ -827,15 +823,22 @@ year.
 
 This API will also be available on GudangAPI, http://gudangapi.com/
 
+=head1 DESCRIPTION
+
+
+This module has L<Rinci> metadata.
+
 =head1 FUNCTIONS
 
+
+None are exported by default, but they are exportable.
 
 =head2 count_id_workdays(%args) -> [status, msg, result, meta]
 
 Count working days for a certain period.
 
-Working day is defined as day that is not SaturdayB</Sunday/holiday/joint leave
-days>. If workB<saturdays is set to true, Saturdays are also counted as working
+Working day is defined as day that is not SaturdayI</Sunday/holiday/joint leave
+days>. If workI<saturdays is set to true, Saturdays are also counted as working
 days. If observe>joint_leaves is set to false, joint leave days are also counted
 as working days.
 
@@ -878,8 +881,8 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 Enumerate working days for a certain period.
 
-Working day is defined as day that is not SaturdayB</Sunday/holiday/joint leave
-days>. If workB<saturdays is set to true, Saturdays are also counted as working
+Working day is defined as day that is not SaturdayI</Sunday/holiday/joint leave
+days>. If workI<saturdays is set to true, Saturdays are also counted as working
 days. If observe>joint_leaves is set to false, joint leave days are also counted
 as working days.
 

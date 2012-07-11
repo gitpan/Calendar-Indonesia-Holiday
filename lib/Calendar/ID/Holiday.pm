@@ -1,6 +1,6 @@
 package Calendar::ID::Holiday;
 use Calendar::Indonesia::Holiday;
-our $VERSION = '0.09'; # VERSION
+our $VERSION = '0.10'; # VERSION
 our @ISA       = @Calendar::Indonesia::Holiday::ISA;
 our @EXPORT    = @Calendar::Indonesia::Holiday::EXPORT;
 our @EXPORT_OK = @Calendar::Indonesia::Holiday::EXPORT_OK;
@@ -21,17 +21,24 @@ Calendar::ID::Holiday - Alias for Calendar::Indonesia::Holiday
 
 =head1 VERSION
 
-version 0.09
+version 0.10
+
+=head1 DESCRIPTION
+
+
+This module has L<Rinci> metadata.
 
 =head1 FUNCTIONS
 
+
+None are exported by default, but they are exportable.
 
 =head2 count_id_workdays(%args) -> [status, msg, result, meta]
 
 Count working days for a certain period.
 
-Working day is defined as day that is not SaturdayB</Sunday/holiday/joint leave
-days>. If workB<saturdays is set to true, Saturdays are also counted as working
+Working day is defined as day that is not SaturdayI</Sunday/holiday/joint leave
+days>. If workI<saturdays is set to true, Saturdays are also counted as working
 days. If observe>joint_leaves is set to false, joint leave days are also counted
 as working days.
 
@@ -74,8 +81,8 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 Enumerate working days for a certain period.
 
-Working day is defined as day that is not SaturdayB</Sunday/holiday/joint leave
-days>. If workB<saturdays is set to true, Saturdays are also counted as working
+Working day is defined as day that is not SaturdayI</Sunday/holiday/joint leave
+days>. If workI<saturdays is set to true, Saturdays are also counted as working
 days. If observe>joint_leaves is set to false, joint leave days are also counted
 as working days.
 
