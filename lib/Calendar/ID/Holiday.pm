@@ -1,6 +1,6 @@
 package Calendar::ID::Holiday;
 use Calendar::Indonesia::Holiday;
-our $VERSION = '0.10'; # VERSION
+our $VERSION = '0.11'; # VERSION
 our @ISA       = @Calendar::Indonesia::Holiday::ISA;
 our @EXPORT    = @Calendar::Indonesia::Holiday::EXPORT;
 our @EXPORT_OK = @Calendar::Indonesia::Holiday::EXPORT_OK;
@@ -21,7 +21,7 @@ Calendar::ID::Holiday - Alias for Calendar::Indonesia::Holiday
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 DESCRIPTION
 
@@ -42,14 +42,14 @@ days>. If workI<saturdays is set to true, Saturdays are also counted as working
 days. If observe>joint_leaves is set to false, joint leave days are also counted
 as working days.
 
-Contains data from years 2002 to 2012 (joint leave days until
-2012).
+Contains data from years 2002 to 2013 (joint leave days until
+2013).
 
 Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<end_date>* => I<str>
+=item * B<end_date> => I<str>
 
 End date.
 
@@ -60,7 +60,7 @@ or a DateTime object, is accepted.
 
 If set to 0, do not observe joint leave as holidays.
 
-=item * B<start_date>* => I<str>
+=item * B<start_date> => I<str>
 
 Starting date.
 
@@ -86,14 +86,14 @@ days>. If workI<saturdays is set to true, Saturdays are also counted as working
 days. If observe>joint_leaves is set to false, joint leave days are also counted
 as working days.
 
-Contains data from years 2002 to 2012 (joint leave days until
-2012).
+Contains data from years 2002 to 2013 (joint leave days until
+2013).
 
 Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<end_date>* => I<str>
+=item * B<end_date> => I<str>
 
 End date.
 
@@ -104,7 +104,7 @@ or a DateTime object, is accepted.
 
 If set to 0, do not observe joint leave as holidays.
 
-=item * B<start_date>* => I<str>
+=item * B<start_date> => I<str>
 
 Starting date.
 
@@ -127,14 +127,14 @@ List Indonesian holidays in calendar.
 
 List holidays and joint leave days ("cuti bersama").
 
-Contains data from years 2002 to 2012 (joint leave days until
-2012).
+Contains data from years 2002 to 2013 (joint leave days until
+2013).
 
 Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<date>* => I<str>
+=item * B<date> => I<str>
 
 Only return records where the 'date' field equals specified value.
 
@@ -142,7 +142,7 @@ Only return records where the 'date' field equals specified value.
 
 Only return records where the 'date' field contains specified text.
 
-=item * B<date.is>* => I<str>
+=item * B<date.is> => I<str>
 
 Only return records where the 'date' field equals specified value.
 
@@ -166,11 +166,11 @@ Only return records where the 'date' field is less than specified value.
 
 Only return records where the 'date' field is greater than specified value.
 
-=item * B<day>* => I<int>
+=item * B<day> => I<int>
 
 Only return records where the 'day' field equals specified value.
 
-=item * B<day.is>* => I<int>
+=item * B<day.is> => I<int>
 
 Only return records where the 'day' field equals specified value.
 
@@ -196,11 +196,11 @@ Return array of full records instead of just ID fields.
 
 By default, only the key (ID) field is returned per result entry.
 
-=item * B<dow>* => I<int>
+=item * B<dow> => I<int>
 
 Only return records where the 'dow' field equals specified value.
 
-=item * B<dow.is>* => I<int>
+=item * B<dow.is> => I<int>
 
 Only return records where the 'dow' field equals specified value.
 
@@ -220,31 +220,31 @@ Only return records where the 'dow' field is less than specified value.
 
 Only return records where the 'dow' field is greater than specified value.
 
-=item * B<fields>* => I<array>
+=item * B<fields> => I<array>
 
 Select fields to return.
 
-=item * B<is_holiday>* => I<bool>
+=item * B<is_holiday> => I<bool>
 
 Only return records where the 'is_holiday' field equals specified value.
 
-=item * B<is_holiday.is>* => I<bool>
+=item * B<is_holiday.is> => I<bool>
 
 Only return records where the 'is_holiday' field equals specified value.
 
-=item * B<is_joint_leave>* => I<bool>
+=item * B<is_joint_leave> => I<bool>
 
 Only return records where the 'is_joint_leave' field equals specified value.
 
-=item * B<is_joint_leave.is>* => I<bool>
+=item * B<is_joint_leave.is> => I<bool>
 
 Only return records where the 'is_joint_leave' field equals specified value.
 
-=item * B<month>* => I<int>
+=item * B<month> => I<int>
 
 Only return records where the 'month' field equals specified value.
 
-=item * B<month.is>* => I<int>
+=item * B<month.is> => I<int>
 
 Only return records where the 'month' field equals specified value.
 
@@ -287,7 +287,7 @@ Order records according to certain field(s).
 A list of field names separated by comma. Each field can be prefixed with '-' to
 specify descending order instead of the default ascending.
 
-=item * B<tags>* => I<array>
+=item * B<tags> => I<array>
 
 Only return records where the 'tags' field equals specified value.
 
@@ -295,7 +295,7 @@ Only return records where the 'tags' field equals specified value.
 
 Only return records where the 'tags' field is an array/list which contains specified value.
 
-=item * B<tags.is>* => I<array>
+=item * B<tags.is> => I<array>
 
 Only return records where the 'tags' field equals specified value.
 
@@ -311,11 +311,11 @@ When enabled, function will return each record as hash/associative array
 (field name => value pairs). Otherwise, function will return each record
 as list/array (field value, field value, ...).
 
-=item * B<year>* => I<int>
+=item * B<year> => I<int>
 
 Only return records where the 'year' field equals specified value.
 
-=item * B<year.is>* => I<int>
+=item * B<year.is> => I<int>
 
 Only return records where the 'year' field equals specified value.
 

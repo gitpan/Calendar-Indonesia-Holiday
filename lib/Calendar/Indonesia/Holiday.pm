@@ -7,7 +7,7 @@ use Log::Any '$log';
 
 use Data::Clone;
 use DateTime;
-use Perinci::Sub::Gen::AccessTable qw(gen_read_table_func);
+use Perinci::Sub::Gen::AccessTable 0.14 qw(gen_read_table_func);
 
 use Exporter;
 our @ISA = qw(Exporter);
@@ -17,7 +17,7 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.10'; # VERSION
+our $VERSION = '0.11'; # VERSION
 
 our %SPEC;
 my @fixed_holidays = (
@@ -451,7 +451,7 @@ $year_holidays{2011} = [
 
 # decreed may 16, 2011
 my $eidulf2012;
-$year_holidays{2012} = _make_jl_tentative [
+$year_holidays{2012} = [
     _h_chnewyear ({_expand_dm("23-01")}, {hyear=>2563}),
     _h_mawlid    ({_expand_dm("04-02")}),
     _h_nyepi     ({_expand_dm("23-03")}, {hyear=>1934}),
@@ -467,6 +467,31 @@ $year_holidays{2012} = _make_jl_tentative [
 
     _jointlv     ({_expand_dm("21-08")}, {holiday=>$eidulf2012}),
     _jointlv     ({_expand_dm("22-08")}, {holiday=>$eidulf2012}),
+    _jointlv     ({_expand_dm("26-12")}, {holiday=>$christmas}),
+];
+
+# decreed jul 19, 2012
+my $eidulf2013;
+my $eidula2013;
+$year_holidays{2013} = [
+    _h_mawlid    ({_expand_dm("24-01")}),
+    _h_chnewyear ({_expand_dm("10-02")}, {hyear=>2564}),
+    _h_nyepi     ({_expand_dm("12-03")}, {hyear=>1935}),
+    _h_goodfri   ({_expand_dm("29-03")}),
+    _h_ascension ({_expand_dm("09-05")}),
+    _h_vesakha   ({_expand_dm("25-05")}, {hyear=>2557}),
+    _h_isramiraj ({_expand_dm("06-06")}),
+    ($eidulf2013 =
+    _h_eidulf    ({_expand_dm("08-08")}, {hyear=>1434, day=>1})),
+    _h_eidulf    ({_expand_dm("09-08")}, {hyear=>1434, day=>2}),
+    ($eidula2013 =
+    _h_eidula    ({_expand_dm("15-10")})),
+    _h_hijra     ({_expand_dm("05-11")}, {hyear=>1435}),
+
+    _jointlv     ({_expand_dm("05-08")}, {holiday=>$eidulf2013}),
+    _jointlv     ({_expand_dm("06-08")}, {holiday=>$eidulf2013}),
+    _jointlv     ({_expand_dm("07-08")}, {holiday=>$eidulf2013}),
+    _jointlv     ({_expand_dm("14-10")}, {holiday=>$eidula2013}),
     _jointlv     ({_expand_dm("26-12")}, {holiday=>$christmas}),
 ];
 
@@ -513,7 +538,7 @@ for my $year ($min_year .. $max_year) {
 }
 
 my $res = gen_read_table_func(
-    name => 'list_id_holidays',
+    name => __PACKAGE__ . '::list_id_holidays',
     table_data => \@holidays,
     table_spec => {
         fields => {
@@ -585,6 +610,7 @@ my $res = gen_read_table_func(
         },
         pk => 'date',
     },
+    langs => ['en_US', 'id_ID'],
 );
 
 die "BUG: Can't generate func: $res->[0] - $res->[1]"
@@ -725,7 +751,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 
@@ -842,14 +868,14 @@ days>. If workI<saturdays is set to true, Saturdays are also counted as working
 days. If observe>joint_leaves is set to false, joint leave days are also counted
 as working days.
 
-Contains data from years 2002 to 2012 (joint leave days until
-2012).
+Contains data from years 2002 to 2013 (joint leave days until
+2013).
 
 Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<end_date>* => I<str>
+=item * B<end_date> => I<str>
 
 End date.
 
@@ -860,7 +886,7 @@ or a DateTime object, is accepted.
 
 If set to 0, do not observe joint leave as holidays.
 
-=item * B<start_date>* => I<str>
+=item * B<start_date> => I<str>
 
 Starting date.
 
@@ -886,14 +912,14 @@ days>. If workI<saturdays is set to true, Saturdays are also counted as working
 days. If observe>joint_leaves is set to false, joint leave days are also counted
 as working days.
 
-Contains data from years 2002 to 2012 (joint leave days until
-2012).
+Contains data from years 2002 to 2013 (joint leave days until
+2013).
 
 Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<end_date>* => I<str>
+=item * B<end_date> => I<str>
 
 End date.
 
@@ -904,7 +930,7 @@ or a DateTime object, is accepted.
 
 If set to 0, do not observe joint leave as holidays.
 
-=item * B<start_date>* => I<str>
+=item * B<start_date> => I<str>
 
 Starting date.
 
@@ -927,14 +953,14 @@ List Indonesian holidays in calendar.
 
 List holidays and joint leave days ("cuti bersama").
 
-Contains data from years 2002 to 2012 (joint leave days until
-2012).
+Contains data from years 2002 to 2013 (joint leave days until
+2013).
 
 Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<date>* => I<str>
+=item * B<date> => I<str>
 
 Only return records where the 'date' field equals specified value.
 
@@ -942,7 +968,7 @@ Only return records where the 'date' field equals specified value.
 
 Only return records where the 'date' field contains specified text.
 
-=item * B<date.is>* => I<str>
+=item * B<date.is> => I<str>
 
 Only return records where the 'date' field equals specified value.
 
@@ -966,11 +992,11 @@ Only return records where the 'date' field is less than specified value.
 
 Only return records where the 'date' field is greater than specified value.
 
-=item * B<day>* => I<int>
+=item * B<day> => I<int>
 
 Only return records where the 'day' field equals specified value.
 
-=item * B<day.is>* => I<int>
+=item * B<day.is> => I<int>
 
 Only return records where the 'day' field equals specified value.
 
@@ -996,11 +1022,11 @@ Return array of full records instead of just ID fields.
 
 By default, only the key (ID) field is returned per result entry.
 
-=item * B<dow>* => I<int>
+=item * B<dow> => I<int>
 
 Only return records where the 'dow' field equals specified value.
 
-=item * B<dow.is>* => I<int>
+=item * B<dow.is> => I<int>
 
 Only return records where the 'dow' field equals specified value.
 
@@ -1020,31 +1046,31 @@ Only return records where the 'dow' field is less than specified value.
 
 Only return records where the 'dow' field is greater than specified value.
 
-=item * B<fields>* => I<array>
+=item * B<fields> => I<array>
 
 Select fields to return.
 
-=item * B<is_holiday>* => I<bool>
+=item * B<is_holiday> => I<bool>
 
 Only return records where the 'is_holiday' field equals specified value.
 
-=item * B<is_holiday.is>* => I<bool>
+=item * B<is_holiday.is> => I<bool>
 
 Only return records where the 'is_holiday' field equals specified value.
 
-=item * B<is_joint_leave>* => I<bool>
+=item * B<is_joint_leave> => I<bool>
 
 Only return records where the 'is_joint_leave' field equals specified value.
 
-=item * B<is_joint_leave.is>* => I<bool>
+=item * B<is_joint_leave.is> => I<bool>
 
 Only return records where the 'is_joint_leave' field equals specified value.
 
-=item * B<month>* => I<int>
+=item * B<month> => I<int>
 
 Only return records where the 'month' field equals specified value.
 
-=item * B<month.is>* => I<int>
+=item * B<month.is> => I<int>
 
 Only return records where the 'month' field equals specified value.
 
@@ -1087,7 +1113,7 @@ Order records according to certain field(s).
 A list of field names separated by comma. Each field can be prefixed with '-' to
 specify descending order instead of the default ascending.
 
-=item * B<tags>* => I<array>
+=item * B<tags> => I<array>
 
 Only return records where the 'tags' field equals specified value.
 
@@ -1095,7 +1121,7 @@ Only return records where the 'tags' field equals specified value.
 
 Only return records where the 'tags' field is an array/list which contains specified value.
 
-=item * B<tags.is>* => I<array>
+=item * B<tags.is> => I<array>
 
 Only return records where the 'tags' field equals specified value.
 
@@ -1111,11 +1137,11 @@ When enabled, function will return each record as hash/associative array
 (field name => value pairs). Otherwise, function will return each record
 as list/array (field value, field value, ...).
 
-=item * B<year>* => I<int>
+=item * B<year> => I<int>
 
 Only return records where the 'year' field equals specified value.
 
-=item * B<year.is>* => I<int>
+=item * B<year.is> => I<int>
 
 Only return records where the 'year' field equals specified value.
 

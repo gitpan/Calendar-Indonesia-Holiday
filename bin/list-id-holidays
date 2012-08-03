@@ -6,7 +6,7 @@ use warnings;
 
 use Perinci::CmdLine;
 
-our $VERSION = '0.10'; # VERSION
+our $VERSION = '0.11'; # VERSION
 
 Perinci::CmdLine->new(url => '/Calendar/Indonesia/Holiday/list_id_holidays')->
     run;
@@ -25,7 +25,7 @@ list-id-holidays - List Indonesian holidays
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 

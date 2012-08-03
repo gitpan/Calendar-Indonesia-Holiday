@@ -2,7 +2,7 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    version 0.10
+    version 0.11
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -108,11 +108,11 @@ FUNCTIONS
     counted as working days. If observe*joint_leaves is set to false, joint
     leave days are also counted as working days.
 
-    Contains data from years 2002 to 2012 (joint leave days until 2012).
+    Contains data from years 2002 to 2013 (joint leave days until 2013).
 
     Arguments ('*' denotes required arguments):
 
-    *   end_date* => *str*
+    *   end_date => *str*
 
         End date.
 
@@ -123,7 +123,7 @@ FUNCTIONS
 
         If set to 0, do not observe joint leave as holidays.
 
-    *   start_date* => *str*
+    *   start_date => *str*
 
         Starting date.
 
@@ -151,11 +151,11 @@ FUNCTIONS
     counted as working days. If observe*joint_leaves is set to false, joint
     leave days are also counted as working days.
 
-    Contains data from years 2002 to 2012 (joint leave days until 2012).
+    Contains data from years 2002 to 2013 (joint leave days until 2013).
 
     Arguments ('*' denotes required arguments):
 
-    *   end_date* => *str*
+    *   end_date => *str*
 
         End date.
 
@@ -166,7 +166,7 @@ FUNCTIONS
 
         If set to 0, do not observe joint leave as holidays.
 
-    *   start_date* => *str*
+    *   start_date => *str*
 
         Starting date.
 
@@ -191,11 +191,11 @@ FUNCTIONS
 
     List holidays and joint leave days ("cuti bersama").
 
-    Contains data from years 2002 to 2012 (joint leave days until 2012).
+    Contains data from years 2002 to 2013 (joint leave days until 2013).
 
     Arguments ('*' denotes required arguments):
 
-    *   date* => *str*
+    *   date => *str*
 
         Only return records where the 'date' field equals specified value.
 
@@ -203,7 +203,7 @@ FUNCTIONS
 
         Only return records where the 'date' field contains specified text.
 
-    *   date.is* => *str*
+    *   date.is => *str*
 
         Only return records where the 'date' field equals specified value.
 
@@ -232,11 +232,11 @@ FUNCTIONS
         Only return records where the 'date' field is greater than specified
         value.
 
-    *   day* => *int*
+    *   day => *int*
 
         Only return records where the 'day' field equals specified value.
 
-    *   day.is* => *int*
+    *   day.is => *int*
 
         Only return records where the 'day' field equals specified value.
 
@@ -266,11 +266,11 @@ FUNCTIONS
 
         By default, only the key (ID) field is returned per result entry.
 
-    *   dow* => *int*
+    *   dow => *int*
 
         Only return records where the 'dow' field equals specified value.
 
-    *   dow.is* => *int*
+    *   dow.is => *int*
 
         Only return records where the 'dow' field equals specified value.
 
@@ -294,35 +294,35 @@ FUNCTIONS
         Only return records where the 'dow' field is greater than specified
         value.
 
-    *   fields* => *array*
+    *   fields => *array*
 
         Select fields to return.
 
-    *   is_holiday* => *bool*
+    *   is_holiday => *bool*
 
         Only return records where the 'is_holiday' field equals specified
         value.
 
-    *   is_holiday.is* => *bool*
+    *   is_holiday.is => *bool*
 
         Only return records where the 'is_holiday' field equals specified
         value.
 
-    *   is_joint_leave* => *bool*
+    *   is_joint_leave => *bool*
 
         Only return records where the 'is_joint_leave' field equals
         specified value.
 
-    *   is_joint_leave.is* => *bool*
+    *   is_joint_leave.is => *bool*
 
         Only return records where the 'is_joint_leave' field equals
         specified value.
 
-    *   month* => *int*
+    *   month => *int*
 
         Only return records where the 'month' field equals specified value.
 
-    *   month.is* => *int*
+    *   month.is => *int*
 
         Only return records where the 'month' field equals specified value.
 
@@ -370,7 +370,7 @@ FUNCTIONS
         with '-' to specify descending order instead of the default
         ascending.
 
-    *   tags* => *array*
+    *   tags => *array*
 
         Only return records where the 'tags' field equals specified value.
 
@@ -379,7 +379,7 @@ FUNCTIONS
         Only return records where the 'tags' field is an array/list which
         contains specified value.
 
-    *   tags.is* => *array*
+    *   tags.is => *array*
 
         Only return records where the 'tags' field equals specified value.
 
@@ -396,11 +396,11 @@ FUNCTIONS
         array (field name => value pairs). Otherwise, function will return
         each record as list/array (field value, field value, ...).
 
-    *   year* => *int*
+    *   year => *int*
 
         Only return records where the 'year' field equals specified value.
 
-    *   year.is* => *int*
+    *   year.is => *int*
 
         Only return records where the 'year' field equals specified value.
 
