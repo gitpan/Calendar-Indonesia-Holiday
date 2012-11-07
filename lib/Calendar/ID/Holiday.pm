@@ -1,6 +1,6 @@
 package Calendar::ID::Holiday;
 use Calendar::Indonesia::Holiday;
-our $VERSION = '0.11'; # VERSION
+our $VERSION = '0.12'; # VERSION
 our @ISA       = @Calendar::Indonesia::Holiday::ISA;
 our @EXPORT    = @Calendar::Indonesia::Holiday::EXPORT;
 our @EXPORT_OK = @Calendar::Indonesia::Holiday::EXPORT_OK;
@@ -21,7 +21,7 @@ Calendar::ID::Holiday - Alias for Calendar::Indonesia::Holiday
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 DESCRIPTION
 

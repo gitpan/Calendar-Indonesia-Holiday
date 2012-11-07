@@ -7,7 +7,8 @@ use Log::Any '$log';
 
 use Data::Clone;
 use DateTime;
-use Perinci::Sub::Gen::AccessTable 0.14 qw(gen_read_table_func);
+use Perinci::Sub::Gen::AccessTable 0.16 qw(gen_read_table_func);
+use Perinci::Sub::Util qw(wrapres);
 
 use Exporter;
 our @ISA = qw(Exporter);
@@ -17,7 +18,7 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.11'; # VERSION
+our $VERSION = '0.12'; # VERSION
 
 our %SPEC;
 my @fixed_holidays = (
@@ -538,7 +539,7 @@ for my $year ($min_year .. $max_year) {
 }
 
 my $res = gen_read_table_func(
-    name => __PACKAGE__ . '::list_id_holidays',
+    name => 'list_id_holidays',
     table_data => \@holidays,
     table_spec => {
         fields => {
@@ -709,7 +710,7 @@ sub enum_id_workdays {
     push @args, "year.max"=>$end_date->year;
     push @args, (is_holiday=>1) if !$observe_joint_leaves;
     my $res = list_id_holidays(@args);
-    return [500, "Can't list holidays: $res->[0] - $res->[1]"]
+    return wrapres([500, "Can't list holidays: "], $res)
         unless $res->[0] == 200;
     #use Data::Dump; dd $res;
 
@@ -751,7 +752,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 

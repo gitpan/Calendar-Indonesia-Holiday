@@ -18,7 +18,7 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Calendar-Indonesia-Holiday",
-  "dist_version" => "0.11",
+  "dist_version" => "0.12",
   "license" => "perl",
   "module_name" => "Calendar::Indonesia::Holiday",
   "recommends" => {},
@@ -26,8 +26,10 @@ my %module_build_args = (
   "requires" => {
     "Data::Clone" => 0,
     "DateTime" => 0,
+    "Log::Any" => 0,
     "Perinci::CmdLine" => 0,
-    "Perinci::Sub::Gen::AccessTable" => "0.14",
+    "Perinci::Sub::Gen::AccessTable" => "0.16",
+    "Perinci::Sub::Util" => "0.32",
     "Rinci" => "0.13",
     "perl" => "5.010000"
   },
