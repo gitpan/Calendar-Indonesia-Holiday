@@ -1,8 +1,9 @@
 package Calendar::Indonesia::Holiday;
 
-use 5.010;
+use 5.010001;
 use strict;
 use warnings;
+use experimental 'smartmatch';
 use Log::Any '$log';
 
 use Data::Clone;
@@ -18,27 +19,37 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.12'; # VERSION
+our $VERSION = '0.13'; # VERSION
 
 our %SPEC;
 my @fixed_holidays = (
     my $newyear = {
         day        =>  1, month =>  1,
-        ind_name    => "Tahun Baru",
-        eng_name    => "New Year",
+        ind_name   => "Tahun Baru",
+        eng_name   => "New Year",
         tags       => [qw/international/],
     },
     my $indep = {
         day        => 17, month =>  8,
-        ind_name    => "Proklamasi",
-        eng_name    => "Declaration Of Independence",
+        ind_name   => "Proklamasi",
+        eng_name   => "Declaration Of Independence",
         tags       => [],
     },
     my $christmas = {
         day        => 25, month => 12,
-        ind_name    => "Natal",
-        eng_name    => "Christmas",
+        ind_name   => "Natal",
+        eng_name   => "Christmas",
         tags       => [qw/international religious religion=christianity/],
+    },
+
+    # labor day becomes national holiday since 2014 (decreed by president @ apr
+    # 29, 2013.
+    my $labord = {
+        day        => 1, month => 5,
+        year_start => 2014,
+        ind_name   => "Hari Buruh",
+        eng_name   => "Labor Day",
+        tags       => [qw/international/],
     },
 );
 
@@ -199,17 +210,27 @@ sub _jointlv {
     ($r);
 }
 
+# can operate on a single holiday or multiple ones
+sub _make_tentative {
+    my ($h) = @_;
+    my $hh = ref($h) eq 'ARRAY' ? $h : [$h];
+    for (@$hh) {
+        push @{ $_->{tags} }, 'tentative' unless $_->{tags} ~~ 'tentative';
+    }
+    return $h;
+}
+
 sub _make_jl_tentative {
     my ($holidays) = @_;
     for (@$holidays) {
-        push @{$_->{tags}}, "tentative" if $_->{is_joint_leave}
+        _make_tentative($_) if $_->{is_joint_leave};
     }
     $holidays;
 }
 
 sub _expand_dm {
     $_[0] =~ m!(\d+)[-/](\d+)! or die "Bug: bad dm syntax $_[0]";
-    return (day => $1, month => $2);
+    return (day => $1+0, month => $2+0);
 }
 
 my %year_holidays;
@@ -496,6 +517,33 @@ $year_holidays{2013} = [
     _jointlv     ({_expand_dm("26-12")}, {holiday=>$christmas}),
 ];
 
+my $eidulf2014;
+my $eidula2014;
+$year_holidays{2014} = _make_tentative [ # tentative, no decree yet
+    _h_mawlid    ({_expand_dm("14-01")}),
+    _h_chnewyear ({_expand_dm("31-01")}, {hyear=>2565}),
+    _h_goodfri   ({_expand_dm("18-04")}),
+    _h_vesakha   ({_expand_dm("14-05")}, {hyear=>2558}),
+    _h_isramiraj ({_expand_dm("25-05")}),
+    _h_ascension ({_expand_dm("29-05")}),
+    _h_nyepi     ({_expand_dm("18-04")}, {hyear=>1936}),
+
+    ($eidulf2014 =
+    _h_eidulf    ({_expand_dm("29-07")}, {hyear=>1435, day=>1})),
+    _h_eidulf    ({_expand_dm("30-07")}, {hyear=>1435, day=>2}),
+    ($eidula2014 =
+    _h_eidula    ({_expand_dm("05-10")})),
+    _h_hijra     ({_expand_dm("25-10")}, {hyear=>1436}),
+
+
+    # not yet
+    #_jointlv     ({_expand_dm("-")}, {holiday=>$eidulf2014}),
+    #_jointlv     ({_expand_dm("-")}, {holiday=>$eidulf2014}),
+    #_jointlv     ({_expand_dm("-")}, {holiday=>$eidulf2014}),
+    #_jointlv     ({_expand_dm("-")}, {holiday=>$eidula2014}),
+    #_jointlv     ({_expand_dm("-")}, {holiday=>$christmas}),
+];
+
 my @years     = sort keys %year_holidays;
 our $min_year = $years[0];
 our $max_year = $years[-1];
@@ -511,6 +559,8 @@ my @holidays;
 for my $year ($min_year .. $max_year) {
     my @hf;
     for my $h0 (@fixed_holidays) {
+        next if $h0->{year_start} && $year < $h0->{year_start};
+        next if $h0->{year_en}    && $year > $h0->{year_end};
         my $h = clone $h0;
         push @{$h->{tags}}, "fixed-date";
         $h->{is_holiday}     = 1;
@@ -742,9 +792,11 @@ sub count_id_workdays {
 1;
 # ABSTRACT: List Indonesian public holidays
 
-
 __END__
+
 =pod
+
+=encoding utf-8
 
 =head1 NAME
 
@@ -752,7 +804,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.12
+version 0.13
 
 =head1 SYNOPSIS
 
@@ -850,334 +902,44 @@ year.
 
 This API will also be available on GudangAPI, http://gudangapi.com/
 
-=head1 DESCRIPTION
-
-
-This module has L<Rinci> metadata.
-
-=head1 FUNCTIONS
-
-
-None are exported by default, but they are exportable.
-
-=head2 count_id_workdays(%args) -> [status, msg, result, meta]
-
-Count working days for a certain period.
-
-Working day is defined as day that is not SaturdayI</Sunday/holiday/joint leave
-days>. If workI<saturdays is set to true, Saturdays are also counted as working
-days. If observe>joint_leaves is set to false, joint leave days are also counted
-as working days.
-
-Contains data from years 2002 to 2013 (joint leave days until
-2013).
-
-Arguments ('*' denotes required arguments):
-
-=over 4
-
-=item * B<end_date> => I<str>
-
-End date.
-
-Defaults to end of current month. Either a string in the form of "YYYY-MM-DD",
-or a DateTime object, is accepted.
-
-=item * B<observe_joint_leaves> => I<bool> (default: 1)
-
-If set to 0, do not observe joint leave as holidays.
-
-=item * B<start_date> => I<str>
-
-Starting date.
-
-Defaults to start of current month. Either a string in the form of "YYYY-MM-DD",
-or a DateTime object, is accepted.
-
-=item * B<work_saturdays> => I<bool> (default: 0)
-
-If set to 1, Saturday is a working day.
-
-=back
-
-Return value:
-
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
-
-=head2 enum_id_workdays(%args) -> [status, msg, result, meta]
-
-Enumerate working days for a certain period.
-
-Working day is defined as day that is not SaturdayI</Sunday/holiday/joint leave
-days>. If workI<saturdays is set to true, Saturdays are also counted as working
-days. If observe>joint_leaves is set to false, joint leave days are also counted
-as working days.
-
-Contains data from years 2002 to 2013 (joint leave days until
-2013).
-
-Arguments ('*' denotes required arguments):
-
-=over 4
-
-=item * B<end_date> => I<str>
-
-End date.
-
-Defaults to end of current month. Either a string in the form of "YYYY-MM-DD",
-or a DateTime object, is accepted.
-
-=item * B<observe_joint_leaves> => I<bool> (default: 1)
-
-If set to 0, do not observe joint leave as holidays.
-
-=item * B<start_date> => I<str>
-
-Starting date.
-
-Defaults to start of current month. Either a string in the form of "YYYY-MM-DD",
-or a DateTime object, is accepted.
-
-=item * B<work_saturdays> => I<bool> (default: 0)
-
-If set to 1, Saturday is a working day.
-
-=back
-
-Return value:
-
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
-
-=head2 list_id_holidays(%args) -> [status, msg, result, meta]
-
-List Indonesian holidays in calendar.
-
-List holidays and joint leave days ("cuti bersama").
-
-Contains data from years 2002 to 2013 (joint leave days until
-2013).
-
-Arguments ('*' denotes required arguments):
-
-=over 4
-
-=item * B<date> => I<str>
-
-Only return records where the 'date' field equals specified value.
-
-=item * B<date.contains> => I<str>
-
-Only return records where the 'date' field contains specified text.
-
-=item * B<date.is> => I<str>
-
-Only return records where the 'date' field equals specified value.
-
-=item * B<date.max> => I<str>
-
-Only return records where the 'date' field is less than or equal to specified value.
-
-=item * B<date.min> => I<array>
-
-Only return records where the 'date' field is greater than or equal to specified value.
-
-=item * B<date.not_contains> => I<str>
-
-Only return records where the 'date' field does not contain a certain text.
-
-=item * B<date.xmax> => I<str>
-
-Only return records where the 'date' field is less than specified value.
-
-=item * B<date.xmin> => I<array>
-
-Only return records where the 'date' field is greater than specified value.
-
-=item * B<day> => I<int>
-
-Only return records where the 'day' field equals specified value.
-
-=item * B<day.is> => I<int>
-
-Only return records where the 'day' field equals specified value.
-
-=item * B<day.max> => I<int>
-
-Only return records where the 'day' field is less than or equal to specified value.
-
-=item * B<day.min> => I<array>
-
-Only return records where the 'day' field is greater than or equal to specified value.
-
-=item * B<day.xmax> => I<int>
-
-Only return records where the 'day' field is less than specified value.
-
-=item * B<day.xmin> => I<array>
-
-Only return records where the 'day' field is greater than specified value.
-
-=item * B<detail> => I<bool> (default: 0)
-
-Return array of full records instead of just ID fields.
-
-By default, only the key (ID) field is returned per result entry.
-
-=item * B<dow> => I<int>
-
-Only return records where the 'dow' field equals specified value.
-
-=item * B<dow.is> => I<int>
-
-Only return records where the 'dow' field equals specified value.
-
-=item * B<dow.max> => I<int>
-
-Only return records where the 'dow' field is less than or equal to specified value.
-
-=item * B<dow.min> => I<array>
-
-Only return records where the 'dow' field is greater than or equal to specified value.
-
-=item * B<dow.xmax> => I<int>
-
-Only return records where the 'dow' field is less than specified value.
-
-=item * B<dow.xmin> => I<array>
-
-Only return records where the 'dow' field is greater than specified value.
-
-=item * B<fields> => I<array>
-
-Select fields to return.
-
-=item * B<is_holiday> => I<bool>
-
-Only return records where the 'is_holiday' field equals specified value.
-
-=item * B<is_holiday.is> => I<bool>
-
-Only return records where the 'is_holiday' field equals specified value.
-
-=item * B<is_joint_leave> => I<bool>
-
-Only return records where the 'is_joint_leave' field equals specified value.
-
-=item * B<is_joint_leave.is> => I<bool>
-
-Only return records where the 'is_joint_leave' field equals specified value.
-
-=item * B<month> => I<int>
-
-Only return records where the 'month' field equals specified value.
-
-=item * B<month.is> => I<int>
-
-Only return records where the 'month' field equals specified value.
-
-=item * B<month.max> => I<int>
-
-Only return records where the 'month' field is less than or equal to specified value.
-
-=item * B<month.min> => I<array>
-
-Only return records where the 'month' field is greater than or equal to specified value.
-
-=item * B<month.xmax> => I<int>
-
-Only return records where the 'month' field is less than specified value.
-
-=item * B<month.xmin> => I<array>
-
-Only return records where the 'month' field is greater than specified value.
-
-=item * B<q> => I<str>
-
-Search.
-
-=item * B<random> => I<bool> (default: 0)
-
-Return records in random order.
-
-=item * B<result_limit> => I<int>
-
-Only return a certain number of records.
-
-=item * B<result_start> => I<int> (default: 1)
-
-Only return starting from the n'th record.
-
-=item * B<sort> => I<str>
-
-Order records according to certain field(s).
-
-A list of field names separated by comma. Each field can be prefixed with '-' to
-specify descending order instead of the default ascending.
-
-=item * B<tags> => I<array>
-
-Only return records where the 'tags' field equals specified value.
-
-=item * B<tags.has> => I<array>
-
-Only return records where the 'tags' field is an array/list which contains specified value.
-
-=item * B<tags.is> => I<array>
-
-Only return records where the 'tags' field equals specified value.
-
-=item * B<tags.lacks> => I<array>
-
-Only return records where the 'tags' field is an array/list which does not contain specified value.
-
-=item * B<with_field_names> => I<bool>
-
-Return field names in each record (as hash/associative array).
-
-When enabled, function will return each record as hash/associative array
-(field name => value pairs). Otherwise, function will return each record
-as list/array (field value, field value, ...).
-
-=item * B<year> => I<int>
-
-Only return records where the 'year' field equals specified value.
-
-=item * B<year.is> => I<int>
-
-Only return records where the 'year' field equals specified value.
-
-=item * B<year.max> => I<int>
-
-Only return records where the 'year' field is less than or equal to specified value.
-
-=item * B<year.min> => I<array>
-
-Only return records where the 'year' field is greater than or equal to specified value.
-
-=item * B<year.xmax> => I<int>
-
-Only return records where the 'year' field is less than specified value.
-
-=item * B<year.xmin> => I<array>
-
-Only return records where the 'year' field is greater than specified value.
-
-=back
-
-Return value:
-
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
-
 =head1 AUTHOR
 
 Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Steven Haryanto.
+This software is copyright (c) 2013 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
-=cut
+=head1 FUNCTIONS
 
+
+None are exported by default, but they are exportable.
+
+=head2 count_id_workdays() -> [status, msg, result, meta]
+
+No arguments.
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 enum_id_workdays() -> [status, msg, result, meta]
+
+No arguments.
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 list_id_holidays() -> [status, msg, result, meta]
+
+No arguments.
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=cut

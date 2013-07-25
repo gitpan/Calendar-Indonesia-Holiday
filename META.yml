@@ -8,7 +8,7 @@ build_requires:
 configure_requires:
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300006, CPAN::Meta::Converter version 2.113640'
+generated_by: 'Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.131560'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -22,8 +22,9 @@ requires:
   Perinci::Sub::Gen::AccessTable: 0.16
   Perinci::Sub::Util: 0.32
   Rinci: 0.13
-  perl: 5.010000
+  experimental: 0
+  perl: 5.010001
 resources:
   homepage: http://search.cpan.org/dist/Calendar-Indonesia-Holiday/
   repository: http://github.com/sharyanto/perl-Calendar-Indonesia-Holiday
-version: 0.12
+version: 0.13
