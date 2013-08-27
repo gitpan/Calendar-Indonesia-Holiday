@@ -19,7 +19,7 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.13'; # VERSION
+our $VERSION = '0.14'; # VERSION
 
 our %SPEC;
 my @fixed_holidays = (
@@ -517,31 +517,37 @@ $year_holidays{2013} = [
     _jointlv     ({_expand_dm("26-12")}, {holiday=>$christmas}),
 ];
 
+# decreed aug 21, 2013
+#
+# Surat Keputusan Bersama MenPAN dan RB, Menteri Tenaga Kerja dan Transmigrasi,
+# dan Menteri Agama, Rabu (21/8/2013).
+#
+# ref:
+# - http://www.menpan.go.id/berita-terkini/1713-tahun-2014-libur-nasional-dan-cuti-bersama-19-hari
+# - http://nasional.kompas.com/read/2013/08/21/1314422/2014.Ada.19.Hari.Libur.Nasional.dan.Cuti.Bersama
+# - http://www.kaskus.co.id/thread/52145f5359cb175740000007/jadwal-hari-libur-nasional-amp-cuti-bersama-tahun-2014-resmi--download-kalender/
 my $eidulf2014;
 my $eidula2014;
-$year_holidays{2014} = _make_tentative [ # tentative, no decree yet
+$year_holidays{2014} = [
     _h_mawlid    ({_expand_dm("14-01")}),
     _h_chnewyear ({_expand_dm("31-01")}, {hyear=>2565}),
+    _h_nyepi     ({_expand_dm("31-03")}, {hyear=>1936}),
     _h_goodfri   ({_expand_dm("18-04")}),
-    _h_vesakha   ({_expand_dm("14-05")}, {hyear=>2558}),
-    _h_isramiraj ({_expand_dm("25-05")}),
+    _h_vesakha   ({_expand_dm("15-05")}, {hyear=>2558}),
+    _h_isramiraj ({_expand_dm("27-05")}),
     _h_ascension ({_expand_dm("29-05")}),
-    _h_nyepi     ({_expand_dm("18-04")}, {hyear=>1936}),
 
     ($eidulf2014 =
-    _h_eidulf    ({_expand_dm("29-07")}, {hyear=>1435, day=>1})),
-    _h_eidulf    ({_expand_dm("30-07")}, {hyear=>1435, day=>2}),
+    _h_eidulf    ({_expand_dm("28-07")}, {hyear=>1435, day=>1}),
+    _h_eidulf    ({_expand_dm("29-07")}, {hyear=>1435, day=>2})),
     ($eidula2014 =
-    _h_eidula    ({_expand_dm("05-10")})),
+    _h_eidula    ({_expand_dm("05-10")}, {hyear=>1435})),
     _h_hijra     ({_expand_dm("25-10")}, {hyear=>1436}),
 
-
-    # not yet
-    #_jointlv     ({_expand_dm("-")}, {holiday=>$eidulf2014}),
-    #_jointlv     ({_expand_dm("-")}, {holiday=>$eidulf2014}),
-    #_jointlv     ({_expand_dm("-")}, {holiday=>$eidulf2014}),
-    #_jointlv     ({_expand_dm("-")}, {holiday=>$eidula2014}),
-    #_jointlv     ({_expand_dm("-")}, {holiday=>$christmas}),
+    _jointlv     ({_expand_dm("30-07")}, {holiday=>$eidulf2014}),
+    _jointlv     ({_expand_dm("31-07")}, {holiday=>$eidulf2014}),
+    _jointlv     ({_expand_dm("01-08")}, {holiday=>$eidulf2014}),
+    _jointlv     ({_expand_dm("26-12")}, {holiday=>$christmas}),
 ];
 
 my @years     = sort keys %year_holidays;
@@ -804,7 +810,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 SYNOPSIS
 
@@ -918,25 +924,343 @@ the same terms as the Perl 5 programming language system itself.
 
 None are exported by default, but they are exportable.
 
-=head2 count_id_workdays() -> [status, msg, result, meta]
+=head2 count_id_workdays(%args) -> [status, msg, result, meta]
 
-No arguments.
+Working day is defined as day that is not SaturdayI</Sunday/holiday/joint leave
+days>. If workI<saturdays is set to true, Saturdays are also counted as working
+days. If observe>joint_leaves is set to false, joint leave days are also counted
+as working days.
+
+Contains data from years 2002 to 2014 (joint leave days until
+2014).
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<end_date> => I<str>
+
+End date.
+
+Defaults to end of current month. Either a string in the form of "YYYY-MM-DD",
+or a DateTime object, is accepted.
+
+=item * B<observe_joint_leaves> => I<bool> (default: 1)
+
+If set to 0, do not observe joint leave as holidays.
+
+=item * B<start_date> => I<str>
+
+Starting date.
+
+Defaults to start of current month. Either a string in the form of "YYYY-MM-DD",
+or a DateTime object, is accepted.
+
+=item * B<work_saturdays> => I<bool> (default: 0)
+
+If set to 1, Saturday is a working day.
+
+=back
 
 Return value:
 
 Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
-=head2 enum_id_workdays() -> [status, msg, result, meta]
+=head2 enum_id_workdays(%args) -> [status, msg, result, meta]
 
-No arguments.
+Working day is defined as day that is not SaturdayI</Sunday/holiday/joint leave
+days>. If workI<saturdays is set to true, Saturdays are also counted as working
+days. If observe>joint_leaves is set to false, joint leave days are also counted
+as working days.
+
+Contains data from years 2002 to 2014 (joint leave days until
+2014).
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<end_date> => I<str>
+
+End date.
+
+Defaults to end of current month. Either a string in the form of "YYYY-MM-DD",
+or a DateTime object, is accepted.
+
+=item * B<observe_joint_leaves> => I<bool> (default: 1)
+
+If set to 0, do not observe joint leave as holidays.
+
+=item * B<start_date> => I<str>
+
+Starting date.
+
+Defaults to start of current month. Either a string in the form of "YYYY-MM-DD",
+or a DateTime object, is accepted.
+
+=item * B<work_saturdays> => I<bool> (default: 0)
+
+If set to 1, Saturday is a working day.
+
+=back
 
 Return value:
 
 Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
-=head2 list_id_holidays() -> [status, msg, result, meta]
+=head2 list_id_holidays(%args) -> [status, msg, result, meta]
 
-No arguments.
+List holidays and joint leave days ("cuti bersama").
+
+Contains data from years 2002 to 2014 (joint leave days until
+2014).
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<date> => I<str>
+
+Only return records where the 'date' field equals specified value.
+
+=item * B<date.contains> => I<str>
+
+Only return records where the 'date' field contains specified text.
+
+=item * B<date.in> => I<array>
+
+Only return records where the 'date' field is in the specified values.
+
+=item * B<date.is> => I<str>
+
+Only return records where the 'date' field equals specified value.
+
+=item * B<date.max> => I<str>
+
+Only return records where the 'date' field is less than or equal to specified value.
+
+=item * B<date.min> => I<array>
+
+Only return records where the 'date' field is greater than or equal to specified value.
+
+=item * B<date.not_contains> => I<str>
+
+Only return records where the 'date' field does not contain a certain text.
+
+=item * B<date.not_in> => I<array>
+
+Only return records where the 'date' field is not in the specified values.
+
+=item * B<date.xmax> => I<str>
+
+Only return records where the 'date' field is less than specified value.
+
+=item * B<date.xmin> => I<array>
+
+Only return records where the 'date' field is greater than specified value.
+
+=item * B<day> => I<int>
+
+Only return records where the 'day' field equals specified value.
+
+=item * B<day.in> => I<array>
+
+Only return records where the 'day' field is in the specified values.
+
+=item * B<day.is> => I<int>
+
+Only return records where the 'day' field equals specified value.
+
+=item * B<day.max> => I<int>
+
+Only return records where the 'day' field is less than or equal to specified value.
+
+=item * B<day.min> => I<array>
+
+Only return records where the 'day' field is greater than or equal to specified value.
+
+=item * B<day.not_in> => I<array>
+
+Only return records where the 'day' field is not in the specified values.
+
+=item * B<day.xmax> => I<int>
+
+Only return records where the 'day' field is less than specified value.
+
+=item * B<day.xmin> => I<array>
+
+Only return records where the 'day' field is greater than specified value.
+
+=item * B<detail> => I<bool> (default: 0)
+
+Return array of full records instead of just ID fields.
+
+By default, only the key (ID) field is returned per result entry.
+
+=item * B<dow> => I<int>
+
+Only return records where the 'dow' field equals specified value.
+
+=item * B<dow.in> => I<array>
+
+Only return records where the 'dow' field is in the specified values.
+
+=item * B<dow.is> => I<int>
+
+Only return records where the 'dow' field equals specified value.
+
+=item * B<dow.max> => I<int>
+
+Only return records where the 'dow' field is less than or equal to specified value.
+
+=item * B<dow.min> => I<array>
+
+Only return records where the 'dow' field is greater than or equal to specified value.
+
+=item * B<dow.not_in> => I<array>
+
+Only return records where the 'dow' field is not in the specified values.
+
+=item * B<dow.xmax> => I<int>
+
+Only return records where the 'dow' field is less than specified value.
+
+=item * B<dow.xmin> => I<array>
+
+Only return records where the 'dow' field is greater than specified value.
+
+=item * B<fields> => I<array>
+
+Select fields to return.
+
+=item * B<is_holiday> => I<bool>
+
+Only return records where the 'is_holiday' field equals specified value.
+
+=item * B<is_holiday.is> => I<bool>
+
+Only return records where the 'is_holiday' field equals specified value.
+
+=item * B<is_joint_leave> => I<bool>
+
+Only return records where the 'is_joint_leave' field equals specified value.
+
+=item * B<is_joint_leave.is> => I<bool>
+
+Only return records where the 'is_joint_leave' field equals specified value.
+
+=item * B<month> => I<int>
+
+Only return records where the 'month' field equals specified value.
+
+=item * B<month.in> => I<array>
+
+Only return records where the 'month' field is in the specified values.
+
+=item * B<month.is> => I<int>
+
+Only return records where the 'month' field equals specified value.
+
+=item * B<month.max> => I<int>
+
+Only return records where the 'month' field is less than or equal to specified value.
+
+=item * B<month.min> => I<array>
+
+Only return records where the 'month' field is greater than or equal to specified value.
+
+=item * B<month.not_in> => I<array>
+
+Only return records where the 'month' field is not in the specified values.
+
+=item * B<month.xmax> => I<int>
+
+Only return records where the 'month' field is less than specified value.
+
+=item * B<month.xmin> => I<array>
+
+Only return records where the 'month' field is greater than specified value.
+
+=item * B<q> => I<str>
+
+Search.
+
+=item * B<random> => I<bool> (default: 0)
+
+Return records in random order.
+
+=item * B<result_limit> => I<int>
+
+Only return a certain number of records.
+
+=item * B<result_start> => I<int> (default: 1)
+
+Only return starting from the n'th record.
+
+=item * B<sort> => I<str>
+
+Order records according to certain field(s).
+
+A list of field names separated by comma. Each field can be prefixed with '-' to
+specify descending order instead of the default ascending.
+
+=item * B<tags> => I<array>
+
+Only return records where the 'tags' field equals specified value.
+
+=item * B<tags.has> => I<array>
+
+Only return records where the 'tags' field is an array/list which contains specified value.
+
+=item * B<tags.is> => I<array>
+
+Only return records where the 'tags' field equals specified value.
+
+=item * B<tags.lacks> => I<array>
+
+Only return records where the 'tags' field is an array/list which does not contain specified value.
+
+=item * B<with_field_names> => I<bool>
+
+Return field names in each record (as hash/associative array).
+
+When enabled, function will return each record as hash/associative array
+(field name => value pairs). Otherwise, function will return each record
+as list/array (field value, field value, ...).
+
+=item * B<year> => I<int>
+
+Only return records where the 'year' field equals specified value.
+
+=item * B<year.in> => I<array>
+
+Only return records where the 'year' field is in the specified values.
+
+=item * B<year.is> => I<int>
+
+Only return records where the 'year' field equals specified value.
+
+=item * B<year.max> => I<int>
+
+Only return records where the 'year' field is less than or equal to specified value.
+
+=item * B<year.min> => I<array>
+
+Only return records where the 'year' field is greater than or equal to specified value.
+
+=item * B<year.not_in> => I<array>
+
+Only return records where the 'year' field is not in the specified values.
+
+=item * B<year.xmax> => I<int>
+
+Only return records where the 'year' field is less than specified value.
+
+=item * B<year.xmin> => I<array>
+
+Only return records where the 'year' field is greater than specified value.
+
+=back
 
 Return value:
 
