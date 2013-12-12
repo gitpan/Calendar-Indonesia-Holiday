@@ -2,7 +2,7 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    version 0.14
+    version 0.15
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -70,38 +70,6 @@ DESCRIPTION
     This module uses Log::Any logging framework.
 
     This module has Rinci metadata.
-
-FAQ
-  What is "joint leave"?
-    Workers are normally granted 12 days of paid leave per year. They are
-    free to spend it on whichever days they want. The joint leave ("cuti
-    bersama") is a government program of recent years (since 2002) to
-    recommend that some of these leave days be spent together nationally on
-    certain days, especially during Lebaran (Eid Ul-Fitr). It is not
-    mandated, but many do follow it anyway, e.g. government civil workers,
-    banks, etc. I am marking joint leave days with is_joint_leave=1 and
-    is_holiday=0, while the holidays themselves with is_holiday=1, so you
-    can differentiate/select both/either one.
-
-  Holidays before 2002?
-    Will be provided if there is demand and data source.
-
-  Holidays after (current year)+1?
-    Some religious holidays, especially Vesakha, are not determined yet.
-    Joint leave days are also usually decreed by the government in May/June
-    of the preceding year.
-
-SEE ALSO
-    This API will also be available on GudangAPI, http://gudangapi.com/
-
-AUTHOR
-    Steven Haryanto <stevenharyanto@gmail.com>
-
-COPYRIGHT AND LICENSE
-    This software is copyright (c) 2013 by Steven Haryanto.
-
-    This is free software; you can redistribute it and/or modify it under
-    the same terms as the Perl 5 programming language system itself.
 
 FUNCTIONS
     None are exported by default, but they are exportable.
@@ -212,20 +180,25 @@ FUNCTIONS
 
         Only return records where the 'date' field equals specified value.
 
+    *   date.isnt => *str*
+
+        Only return records where the 'date' field does not equal specified
+        value.
+
     *   date.max => *str*
 
         Only return records where the 'date' field is less than or equal to
         specified value.
 
-    *   date.min => *array*
+    *   date.min => *str*
 
         Only return records where the 'date' field is greater than or equal
         to specified value.
 
     *   date.not_contains => *str*
 
-        Only return records where the 'date' field does not contain a
-        certain text.
+        Only return records where the 'date' field does not contain
+        specified text.
 
     *   date.not_in => *array*
 
@@ -237,7 +210,7 @@ FUNCTIONS
         Only return records where the 'date' field is less than specified
         value.
 
-    *   date.xmin => *array*
+    *   date.xmin => *str*
 
         Only return records where the 'date' field is greater than specified
         value.
@@ -255,12 +228,17 @@ FUNCTIONS
 
         Only return records where the 'day' field equals specified value.
 
+    *   day.isnt => *int*
+
+        Only return records where the 'day' field does not equal specified
+        value.
+
     *   day.max => *int*
 
         Only return records where the 'day' field is less than or equal to
         specified value.
 
-    *   day.min => *array*
+    *   day.min => *int*
 
         Only return records where the 'day' field is greater than or equal
         to specified value.
@@ -275,7 +253,7 @@ FUNCTIONS
         Only return records where the 'day' field is less than specified
         value.
 
-    *   day.xmin => *array*
+    *   day.xmin => *int*
 
         Only return records where the 'day' field is greater than specified
         value.
@@ -299,12 +277,17 @@ FUNCTIONS
 
         Only return records where the 'dow' field equals specified value.
 
+    *   dow.isnt => *int*
+
+        Only return records where the 'dow' field does not equal specified
+        value.
+
     *   dow.max => *int*
 
         Only return records where the 'dow' field is less than or equal to
         specified value.
 
-    *   dow.min => *array*
+    *   dow.min => *int*
 
         Only return records where the 'dow' field is greater than or equal
         to specified value.
@@ -319,7 +302,7 @@ FUNCTIONS
         Only return records where the 'dow' field is less than specified
         value.
 
-    *   dow.xmin => *array*
+    *   dow.xmin => *int*
 
         Only return records where the 'dow' field is greater than specified
         value.
@@ -338,6 +321,11 @@ FUNCTIONS
         Only return records where the 'is_holiday' field equals specified
         value.
 
+    *   is_holiday.isnt => *bool*
+
+        Only return records where the 'is_holiday' field does not equal
+        specified value.
+
     *   is_joint_leave => *bool*
 
         Only return records where the 'is_joint_leave' field equals
@@ -346,6 +334,11 @@ FUNCTIONS
     *   is_joint_leave.is => *bool*
 
         Only return records where the 'is_joint_leave' field equals
+        specified value.
+
+    *   is_joint_leave.isnt => *bool*
+
+        Only return records where the 'is_joint_leave' field does not equal
         specified value.
 
     *   month => *int*
@@ -361,12 +354,17 @@ FUNCTIONS
 
         Only return records where the 'month' field equals specified value.
 
+    *   month.isnt => *int*
+
+        Only return records where the 'month' field does not equal specified
+        value.
+
     *   month.max => *int*
 
         Only return records where the 'month' field is less than or equal to
         specified value.
 
-    *   month.min => *array*
+    *   month.min => *int*
 
         Only return records where the 'month' field is greater than or equal
         to specified value.
@@ -381,7 +379,7 @@ FUNCTIONS
         Only return records where the 'month' field is less than specified
         value.
 
-    *   month.xmin => *array*
+    *   month.xmin => *int*
 
         Only return records where the 'month' field is greater than
         specified value.
@@ -423,6 +421,11 @@ FUNCTIONS
 
         Only return records where the 'tags' field equals specified value.
 
+    *   tags.isnt => *array*
+
+        Only return records where the 'tags' field does not equal specified
+        value.
+
     *   tags.lacks => *array*
 
         Only return records where the 'tags' field is an array/list which
@@ -449,12 +452,17 @@ FUNCTIONS
 
         Only return records where the 'year' field equals specified value.
 
+    *   year.isnt => *int*
+
+        Only return records where the 'year' field does not equal specified
+        value.
+
     *   year.max => *int*
 
         Only return records where the 'year' field is less than or equal to
         specified value.
 
-    *   year.min => *array*
+    *   year.min => *int*
 
         Only return records where the 'year' field is greater than or equal
         to specified value.
@@ -469,7 +477,7 @@ FUNCTIONS
         Only return records where the 'year' field is less than specified
         value.
 
-    *   year.xmin => *array*
+    *   year.xmin => *int*
 
         Only return records where the 'year' field is greater than specified
         value.
@@ -482,4 +490,52 @@ FUNCTIONS
     message, or 'OK' if status is 200. Third element (result) is optional,
     the actual result. Fourth element (meta) is called result metadata and
     is optional, a hash that contains extra information.
+
+FAQ
+  What is "joint leave"?
+    Workers are normally granted 12 days of paid leave per year. They are
+    free to spend it on whichever days they want. The joint leave ("cuti
+    bersama") is a government program of recent years (since 2002) to
+    recommend that some of these leave days be spent together nationally on
+    certain days, especially during Lebaran (Eid Ul-Fitr). It is not
+    mandated, but many do follow it anyway, e.g. government civil workers,
+    banks, etc. I am marking joint leave days with is_joint_leave=1 and
+    is_holiday=0, while the holidays themselves with is_holiday=1, so you
+    can differentiate/select both/either one.
+
+  Holidays before 2002?
+    Will be provided if there is demand and data source.
+
+  Holidays after (current year)+1?
+    Some religious holidays, especially Vesakha, are not determined yet.
+    Joint leave days are also usually decreed by the government in May/June
+    of the preceding year.
+
+SEE ALSO
+    This API will also be available on GudangAPI, http://gudangapi.com/
+
+HOMEPAGE
+    Please visit the project's homepage at
+    <https://metacpan.org/release/Calendar-Indonesia-Holiday>.
+
+SOURCE
+    Source repository is at
+    <https://github.com/sharyanto/perl-Calendar-Indonesia-Holiday>.
+
+BUGS
+    Please report any bugs or feature requests on the bugtracker website
+    <https://rt.cpan.org/Public/Dist/Display.html?Name=Calendar-Indonesia-Ho
+    liday>
+
+    When submitting a bug or request, please include a test-file or a patch
+    to an existing test-file that illustrates the bug or desired feature.
+
+AUTHOR
+    Steven Haryanto <stevenharyanto@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2013 by Steven Haryanto.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
 

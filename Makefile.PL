@@ -1,0 +1,75 @@
+
+use strict;
+use warnings;
+
+use 5.010001;
+
+use ExtUtils::MakeMaker 6.30;
+
+
+
+my %WriteMakefileArgs = (
+  "ABSTRACT" => "List Indonesian public holidays",
+  "AUTHOR" => "Steven Haryanto <stevenharyanto\@gmail.com>",
+  "BUILD_REQUIRES" => {},
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
+  },
+  "DISTNAME" => "Calendar-Indonesia-Holiday",
+  "EXE_FILES" => [
+    "bin/list-id-holidays"
+  ],
+  "LICENSE" => "perl",
+  "NAME" => "Calendar::Indonesia::Holiday",
+  "PREREQ_PM" => {
+    "Data::Clone" => 0,
+    "DateTime" => 0,
+    "Log::Any" => 0,
+    "Perinci::CmdLine" => 0,
+    "Perinci::Sub::Gen::AccessTable" => "0.16",
+    "Perinci::Sub::Util" => "0.32",
+    "Rinci" => "0.13",
+    "experimental" => 0
+  },
+  "TEST_REQUIRES" => {
+    "File::Spec" => 0,
+    "IO::Handle" => 0,
+    "IPC::Open3" => 0,
+    "Test::More" => "0.96"
+  },
+  "VERSION" => "0.15",
+  "test" => {
+    "TESTS" => "t/*.t"
+  }
+);
+
+
+my %FallbackPrereqs = (
+  "Data::Clone" => 0,
+  "DateTime" => 0,
+  "File::Spec" => 0,
+  "IO::Handle" => 0,
+  "IPC::Open3" => 0,
+  "Log::Any" => 0,
+  "Perinci::CmdLine" => 0,
+  "Perinci::Sub::Gen::AccessTable" => "0.16",
+  "Perinci::Sub::Util" => "0.32",
+  "Rinci" => "0.13",
+  "Test::More" => "0.96",
+  "experimental" => 0
+);
+
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
+  delete $WriteMakefileArgs{TEST_REQUIRES};
+  delete $WriteMakefileArgs{BUILD_REQUIRES};
+  $WriteMakefileArgs{PREREQ_PM} = \%FallbackPrereqs;
+}
+
+delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
+
+WriteMakefile(%WriteMakefileArgs);
+
+
+

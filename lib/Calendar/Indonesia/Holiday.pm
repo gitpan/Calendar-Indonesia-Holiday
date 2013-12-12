@@ -8,10 +8,10 @@ use Log::Any '$log';
 
 use Data::Clone;
 use DateTime;
-use Perinci::Sub::Gen::AccessTable 0.16 qw(gen_read_table_func);
-use Perinci::Sub::Util qw(wrapres);
+use Perinci::Sub::Gen::AccessTable qw(gen_read_table_func);
+use Perinci::Sub::Util qw(err);
 
-use Exporter;
+require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
                        list_id_holidays
@@ -19,7 +19,7 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.14'; # VERSION
+our $VERSION = '0.15'; # VERSION
 
 our %SPEC;
 my @fixed_holidays = (
@@ -766,7 +766,7 @@ sub enum_id_workdays {
     push @args, "year.max"=>$end_date->year;
     push @args, (is_holiday=>1) if !$observe_joint_leaves;
     my $res = list_id_holidays(@args);
-    return wrapres([500, "Can't list holidays: "], $res)
+    return err(500, "Can't list holidays", $res)
         unless $res->[0] == 200;
     #use Data::Dump; dd $res;
 
@@ -802,7 +802,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -810,7 +810,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.14
+version 0.15
 
 =head1 SYNOPSIS
 
@@ -880,44 +880,6 @@ This module provides functions to list Indonesian holidays.
 This module uses L<Log::Any> logging framework.
 
 This module has L<Rinci> metadata.
-
-=head1 FAQ
-
-=head2 What is "joint leave"?
-
-Workers are normally granted 12 days of paid leave per year. They are free to
-spend it on whichever days they want. The joint leave ("cuti bersama") is a
-government program of recent years (since 2002) to recommend that some of these
-leave days be spent together nationally on certain days, especially during
-Lebaran (Eid Ul-Fitr). It is not mandated, but many do follow it anyway, e.g.
-government civil workers, banks, etc. I am marking joint leave days with
-is_joint_leave=1 and is_holiday=0, while the holidays themselves with
-is_holiday=1, so you can differentiate/select both/either one.
-
-=head2 Holidays before 2002?
-
-Will be provided if there is demand and data source.
-
-=head2 Holidays after (current year)+1?
-
-Some religious holidays, especially Vesakha, are not determined yet. Joint leave
-days are also usually decreed by the government in May/June of the preceding
-year.
-
-=head1 SEE ALSO
-
-This API will also be available on GudangAPI, http://gudangapi.com/
-
-=head1 AUTHOR
-
-Steven Haryanto <stevenharyanto@gmail.com>
-
-=head1 COPYRIGHT AND LICENSE
-
-This software is copyright (c) 2013 by Steven Haryanto.
-
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
 
 =head1 FUNCTIONS
 
@@ -1035,17 +997,21 @@ Only return records where the 'date' field is in the specified values.
 
 Only return records where the 'date' field equals specified value.
 
+=item * B<date.isnt> => I<str>
+
+Only return records where the 'date' field does not equal specified value.
+
 =item * B<date.max> => I<str>
 
 Only return records where the 'date' field is less than or equal to specified value.
 
-=item * B<date.min> => I<array>
+=item * B<date.min> => I<str>
 
 Only return records where the 'date' field is greater than or equal to specified value.
 
 =item * B<date.not_contains> => I<str>
 
-Only return records where the 'date' field does not contain a certain text.
+Only return records where the 'date' field does not contain specified text.
 
 =item * B<date.not_in> => I<array>
 
@@ -1055,7 +1021,7 @@ Only return records where the 'date' field is not in the specified values.
 
 Only return records where the 'date' field is less than specified value.
 
-=item * B<date.xmin> => I<array>
+=item * B<date.xmin> => I<str>
 
 Only return records where the 'date' field is greater than specified value.
 
@@ -1071,11 +1037,15 @@ Only return records where the 'day' field is in the specified values.
 
 Only return records where the 'day' field equals specified value.
 
+=item * B<day.isnt> => I<int>
+
+Only return records where the 'day' field does not equal specified value.
+
 =item * B<day.max> => I<int>
 
 Only return records where the 'day' field is less than or equal to specified value.
 
-=item * B<day.min> => I<array>
+=item * B<day.min> => I<int>
 
 Only return records where the 'day' field is greater than or equal to specified value.
 
@@ -1087,7 +1057,7 @@ Only return records where the 'day' field is not in the specified values.
 
 Only return records where the 'day' field is less than specified value.
 
-=item * B<day.xmin> => I<array>
+=item * B<day.xmin> => I<int>
 
 Only return records where the 'day' field is greater than specified value.
 
@@ -1109,11 +1079,15 @@ Only return records where the 'dow' field is in the specified values.
 
 Only return records where the 'dow' field equals specified value.
 
+=item * B<dow.isnt> => I<int>
+
+Only return records where the 'dow' field does not equal specified value.
+
 =item * B<dow.max> => I<int>
 
 Only return records where the 'dow' field is less than or equal to specified value.
 
-=item * B<dow.min> => I<array>
+=item * B<dow.min> => I<int>
 
 Only return records where the 'dow' field is greater than or equal to specified value.
 
@@ -1125,7 +1099,7 @@ Only return records where the 'dow' field is not in the specified values.
 
 Only return records where the 'dow' field is less than specified value.
 
-=item * B<dow.xmin> => I<array>
+=item * B<dow.xmin> => I<int>
 
 Only return records where the 'dow' field is greater than specified value.
 
@@ -1141,6 +1115,10 @@ Only return records where the 'is_holiday' field equals specified value.
 
 Only return records where the 'is_holiday' field equals specified value.
 
+=item * B<is_holiday.isnt> => I<bool>
+
+Only return records where the 'is_holiday' field does not equal specified value.
+
 =item * B<is_joint_leave> => I<bool>
 
 Only return records where the 'is_joint_leave' field equals specified value.
@@ -1148,6 +1126,10 @@ Only return records where the 'is_joint_leave' field equals specified value.
 =item * B<is_joint_leave.is> => I<bool>
 
 Only return records where the 'is_joint_leave' field equals specified value.
+
+=item * B<is_joint_leave.isnt> => I<bool>
+
+Only return records where the 'is_joint_leave' field does not equal specified value.
 
 =item * B<month> => I<int>
 
@@ -1161,11 +1143,15 @@ Only return records where the 'month' field is in the specified values.
 
 Only return records where the 'month' field equals specified value.
 
+=item * B<month.isnt> => I<int>
+
+Only return records where the 'month' field does not equal specified value.
+
 =item * B<month.max> => I<int>
 
 Only return records where the 'month' field is less than or equal to specified value.
 
-=item * B<month.min> => I<array>
+=item * B<month.min> => I<int>
 
 Only return records where the 'month' field is greater than or equal to specified value.
 
@@ -1177,7 +1163,7 @@ Only return records where the 'month' field is not in the specified values.
 
 Only return records where the 'month' field is less than specified value.
 
-=item * B<month.xmin> => I<array>
+=item * B<month.xmin> => I<int>
 
 Only return records where the 'month' field is greater than specified value.
 
@@ -1216,6 +1202,10 @@ Only return records where the 'tags' field is an array/list which contains speci
 
 Only return records where the 'tags' field equals specified value.
 
+=item * B<tags.isnt> => I<array>
+
+Only return records where the 'tags' field does not equal specified value.
+
 =item * B<tags.lacks> => I<array>
 
 Only return records where the 'tags' field is an array/list which does not contain specified value.
@@ -1240,11 +1230,15 @@ Only return records where the 'year' field is in the specified values.
 
 Only return records where the 'year' field equals specified value.
 
+=item * B<year.isnt> => I<int>
+
+Only return records where the 'year' field does not equal specified value.
+
 =item * B<year.max> => I<int>
 
 Only return records where the 'year' field is less than or equal to specified value.
 
-=item * B<year.min> => I<array>
+=item * B<year.min> => I<int>
 
 Only return records where the 'year' field is greater than or equal to specified value.
 
@@ -1256,7 +1250,7 @@ Only return records where the 'year' field is not in the specified values.
 
 Only return records where the 'year' field is less than specified value.
 
-=item * B<year.xmin> => I<array>
+=item * B<year.xmin> => I<int>
 
 Only return records where the 'year' field is greater than specified value.
 
@@ -1265,5 +1259,59 @@ Only return records where the 'year' field is greater than specified value.
 Return value:
 
 Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head1 FAQ
+
+=head2 What is "joint leave"?
+
+Workers are normally granted 12 days of paid leave per year. They are free to
+spend it on whichever days they want. The joint leave ("cuti bersama") is a
+government program of recent years (since 2002) to recommend that some of these
+leave days be spent together nationally on certain days, especially during
+Lebaran (Eid Ul-Fitr). It is not mandated, but many do follow it anyway, e.g.
+government civil workers, banks, etc. I am marking joint leave days with
+is_joint_leave=1 and is_holiday=0, while the holidays themselves with
+is_holiday=1, so you can differentiate/select both/either one.
+
+=head2 Holidays before 2002?
+
+Will be provided if there is demand and data source.
+
+=head2 Holidays after (current year)+1?
+
+Some religious holidays, especially Vesakha, are not determined yet. Joint leave
+days are also usually decreed by the government in May/June of the preceding
+year.
+
+=head1 SEE ALSO
+
+This API will also be available on GudangAPI, http://gudangapi.com/
+
+=head1 HOMEPAGE
+
+Please visit the project's homepage at L<https://metacpan.org/release/Calendar-Indonesia-Holiday>.
+
+=head1 SOURCE
+
+Source repository is at L<https://github.com/sharyanto/perl-Calendar-Indonesia-Holiday>.
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website L<https://rt.cpan.org/Public/Dist/Display.html?Name=Calendar-Indonesia-Holiday>
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 AUTHOR
+
+Steven Haryanto <stevenharyanto@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2013 by Steven Haryanto.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut

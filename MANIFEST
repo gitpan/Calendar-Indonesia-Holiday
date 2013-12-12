@@ -1,14 +1,13 @@
-Build.PL
 Changes
 LICENSE
 MANIFEST
 MANIFEST.SKIP
 META.json
 META.yml
+Makefile.PL
 README
 bin/list-id-holidays
 dist.ini
-lib/Calendar/ID/Holiday.pm
 lib/Calendar/Indonesia/Holiday.pm
 t/00-compile.t
 t/01-basics.t

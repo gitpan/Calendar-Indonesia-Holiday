@@ -6,7 +6,7 @@ use warnings;
 
 use Perinci::CmdLine;
 
-our $VERSION = '0.14'; # VERSION
+our $VERSION = '0.15'; # VERSION
 
 Perinci::CmdLine->new(url => '/Calendar/Indonesia/Holiday/list_id_holidays')->
     run;
@@ -19,7 +19,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -27,7 +27,7 @@ list-id-holidays - List Indonesian holidays
 
 =head1 VERSION
 
-version 0.14
+version 0.15
 
 =head1 SYNOPSIS
 
@@ -39,8 +39,24 @@ version 0.14
 
 =head1 DESCRIPTION
 
-This is a command-line interface for the <list_id_holidays> function in
+This is a command-line interface for the C<list_id_holidays> function in
 L<Calendar::Indonesia::Holiday>.
+
+=head1 HOMEPAGE
+
+Please visit the project's homepage at L<https://metacpan.org/release/Calendar-Indonesia-Holiday>.
+
+=head1 SOURCE
+
+Source repository is at L<https://github.com/sharyanto/perl-Calendar-Indonesia-Holiday>.
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website L<https://rt.cpan.org/Public/Dist/Display.html?Name=Calendar-Indonesia-Holiday>
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
 
 =head1 AUTHOR
 
