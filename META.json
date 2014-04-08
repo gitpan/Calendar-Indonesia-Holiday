@@ -32,7 +32,7 @@
             "Data::Clone" : "0",
             "DateTime" : "0",
             "Log::Any" : "0",
-            "Perinci::CmdLine" : "0",
+            "Perinci::CmdLine" : "1.06",
             "Perinci::Sub::Gen::AccessTable" : "0.16",
             "Perinci::Sub::Util" : "0.32",
             "Rinci" : "0.13",
@@ -61,7 +61,7 @@
          "web" : "https://github.com/sharyanto/perl-Calendar-Indonesia-Holiday"
       }
    },
-   "version" : "0.16",
+   "version" : "0.17",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018001"

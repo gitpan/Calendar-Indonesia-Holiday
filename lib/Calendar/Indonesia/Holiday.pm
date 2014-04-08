@@ -19,7 +19,7 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.16'; # VERSION
+our $VERSION = '0.17'; # VERSION
 
 our %SPEC;
 my @fixed_holidays = (
@@ -69,10 +69,10 @@ sub _h_chnewyear {
     $r->{eng_name}    = "Chinese New Year".
         ($opts->{hyear} ? " $opts->{hyear}":"");
     _add_original_date($r, $opts);
-    $r->{id_aliases} = [];
-    $r->{en_aliases} = [];
-    $r->{is_holiday} = 1;
-    $r->{tags}       = [qw/international calendar=lunar/];
+    $r->{ind_aliases} = [];
+    $r->{eng_aliases} = [];
+    $r->{is_holiday}  = 1;
+    $r->{tags}        = [qw/international calendar=lunar/];
     ($r);
 }
 
@@ -81,10 +81,10 @@ sub _h_mawlid {
     $r->{ind_name}    = "Maulid Nabi Muhammad";
     $r->{eng_name}    = "Mawlid";
     _add_original_date($r, $opts);
-    $r->{id_aliases} = [qw/Maulud/];
-    $r->{en_aliases} = ["Mawlid An-Nabi"];
-    $r->{is_holiday} = 1;
-    $r->{tags}       = [qw/religious religion=islam calendar=lunar/];
+    $r->{ind_aliases} = [qw/Maulud/];
+    $r->{eng_aliases} = ["Mawlid An-Nabi"];
+    $r->{is_holiday}  = 1;
+    $r->{tags}        = [qw/religious religion=islam calendar=lunar/];
     ($r);
 }
 
@@ -95,10 +95,10 @@ sub _h_nyepi {
     $r->{eng_name}    = "Nyepi".
         ($opts->{hyear} ? " $opts->{hyear}":"");
     _add_original_date($r, $opts);
-    $r->{id_aliases} = ["Tahun Baru Saka"];
-    $r->{en_aliases} = ["Bali New Year", "Bali Day Of Silence"];
-    $r->{is_holiday} = 1;
-    $r->{tags}       = [qw/religious religion=hinduism calendar=saka/];
+    $r->{ind_aliases} = ["Tahun Baru Saka"];
+    $r->{eng_aliases} = ["Bali New Year", "Bali Day Of Silence"];
+    $r->{is_holiday}  = 1;
+    $r->{tags}        = [qw/religious religion=hinduism calendar=saka/];
     ($r);
 }
 
@@ -107,10 +107,10 @@ sub _h_goodfri {
     $r->{ind_name}    = "Jum'at Agung";
     $r->{eng_name}    = "Good Friday";
     _add_original_date($r, $opts);
-    $r->{id_aliases} = ["Wafat Isa Al-Masih"];
-    $r->{en_aliases} = [];
-    $r->{is_holiday} = 1;
-    $r->{tags}       = [qw/religious religion=christianity/];
+    $r->{ind_aliases} = ["Wafat Isa Al-Masih"];
+    $r->{eng_aliases} = [];
+    $r->{is_holiday}  = 1;
+    $r->{tags}        = [qw/religious religion=christianity/];
     ($r);
 }
 
@@ -121,10 +121,10 @@ sub _h_vesakha {
     $r->{eng_name}    = "Vesakha".
         ($opts->{hyear} ? " $opts->{hyear}":"");
     _add_original_date($r, $opts);
-    $r->{id_aliases} = [];
-    $r->{en_aliases} = ["Vesak"];
-    $r->{is_holiday} = 1;
-    $r->{tags}       = [qw/religious religion=buddhism/];
+    $r->{ind_aliases} = [];
+    $r->{eng_aliases} = ["Vesak"];
+    $r->{is_holiday}  = 1;
+    $r->{tags}        = [qw/religious religion=buddhism/];
     ($r);
 }
 
@@ -133,10 +133,10 @@ sub _h_ascension {
     $r->{ind_name}    = "Kenaikan Isa Al-Masih";
     $r->{eng_name}    = "Ascension Day";
     _add_original_date($r, $opts);
-    $r->{id_aliases} = [];
-    $r->{en_aliases} = [];
-    $r->{is_holiday} = 1;
-    $r->{tags}       = [qw/religious religion=christianity/];
+    $r->{ind_aliases} = [];
+    $r->{eng_aliases} = [];
+    $r->{is_holiday}  = 1;
+    $r->{tags}        = [qw/religious religion=christianity/];
     ($r);
 }
 
@@ -145,27 +145,27 @@ sub _h_isramiraj {
     $r->{ind_name}    = "Isra Miraj";
     $r->{eng_name}    = "Isra And Miraj";
     _add_original_date($r, $opts);
-    $r->{id_aliases} = [];
-    $r->{en_aliases} = [];
-    $r->{is_holiday} = 1;
-    $r->{tags}       = [qw/religious religion=islam calendar=lunar/];
+    $r->{ind_aliases} = [];
+    $r->{eng_aliases} = [];
+    $r->{is_holiday}  = 1;
+    $r->{tags}        = [qw/religious religion=islam calendar=lunar/];
     ($r);
 }
 
 sub _h_eidulf {
     my ($r, $opts) = @_;
     $opts //= {};
-    $r->{ind_name0}   = "Idul Fitri".
+    my $ind_name0     = "Idul Fitri".
         ($opts->{hyear} ? " $opts->{hyear}H":"");
-    $r->{eng_name0}   = "Eid Ul-Fitr".
+    my $eng_name0     = "Eid Ul-Fitr".
         ($opts->{hyear} ? " $opts->{hyear}H":"");
-    $r->{ind_name}    = $r->{ind_name0}.($opts->{day} ? ", Hari $opts->{day}":"");
-    $r->{eng_name}    = $r->{eng_name0}.($opts->{day} ? ", Day $opts->{day}":"");
+    $r->{ind_name}    = $ind_name0.($opts->{day} ? ", Hari $opts->{day}":"");
+    $r->{eng_name}    = $eng_name0.($opts->{day} ? ", Day $opts->{day}":"");
     _add_original_date($r, $opts);
-    $r->{id_aliases} = ["Lebaran"];
-    $r->{en_aliases} = [];
-    $r->{is_holiday} = 1;
-    $r->{tags}       = [qw/religious religion=islam calendar=lunar/];
+    $r->{ind_aliases} = ["Lebaran"];
+    $r->{eng_aliases} = [];
+    $r->{is_holiday}  = 1;
+    $r->{tags}        = [qw/religious religion=islam calendar=lunar/];
     ($r);
 }
 
@@ -174,10 +174,10 @@ sub _h_eidula {
     $r->{ind_name}    = "Idul Adha";
     $r->{eng_name}    = "Eid Al-Adha";
     _add_original_date($r, $opts);
-    $r->{id_aliases} = ["Idul Kurban"];
-    $r->{en_aliases} = [];
-    $r->{is_holiday} = 1;
-    $r->{tags}       = [qw/religious religion=islam calendar=lunar/];
+    $r->{ind_aliases} = ["Idul Kurban"];
+    $r->{eng_aliases} = [];
+    $r->{is_holiday}  = 1;
+    $r->{tags}        = [qw/religious religion=islam calendar=lunar/];
     ($r);
 }
 
@@ -189,19 +189,36 @@ sub _h_hijra {
     $r->{eng_name}    = "Hijra".
         ($opts->{hyear} ? " $opts->{hyear}H":"");
     _add_original_date($r, $opts);
-    $r->{id_aliases} = ["1 Muharam"];
-    $r->{en_aliases} = [];
-    $r->{is_holiday} = 1;
-    $r->{tags}       = [qw/calendar=lunar/];
+    $r->{ind_aliases} = ["1 Muharam"];
+    $r->{eng_aliases} = [];
+    $r->{is_holiday}  = 1;
+    $r->{tags}        = [qw/calendar=lunar/];
     ($r);
 }
 
-sub _h_election {
+sub _h_gelection {
     my ($r, $opts) = @_;
     $r->{ind_name}    = "Pemilu";
     $r->{eng_name}    = "General Election";
-    $r->{is_holiday} = 1;
-    $r->{tags}       = [qw/political/];
+    $r->{is_holiday}  = 1;
+    $r->{tags}        = [qw/political/];
+
+    for (qw(decree_date decree_note)) {
+        $r->{$_} = $opts->{$_} if defined $opts->{$_};
+    }
+    ($r);
+}
+
+sub _h_pelection {
+    my ($r, $opts) = @_;
+    $r->{ind_name}    = "Pilpres";
+    $r->{eng_name}    = "Presidential Election";
+    $r->{is_holiday}  = 1;
+    $r->{tags}        = [qw/political/];
+
+    for (qw(decree_date decree_note)) {
+        $r->{$_} = $opts->{$_} if defined $opts->{$_};
+    }
     ($r);
 }
 
@@ -213,10 +230,10 @@ sub _jointlv {
         ($h ? " (".($h->{ind_name0} // $h->{ind_name}).")": "");
     $r->{eng_name}        = "Joint Leave".
         ($h ? " (".($h->{eng_name0} // $h->{eng_name}).")": "");
-    $r->{id_aliases}     = [];
-    $r->{en_aliases}     = [];
-    $r->{is_joint_leave} = 1;
-    $r->{tags}           = [];
+    $r->{ind_aliases}     = [];
+    $r->{eng_aliases}     = [];
+    $r->{is_joint_leave}  = 1;
+    $r->{tags}            = [];
     ($r);
 }
 
@@ -422,9 +439,11 @@ $year_holidays{2009} = [
     _h_chnewyear ({_expand_dm("26-01")}, {hyear=>2560}),
     _h_mawlid    ({_expand_dm("09-03")}),
     _h_nyepi     ({_expand_dm("26-03")}, {hyear=>1931}),
+    _h_gelection ({_expand_dm("09-04")}, {}),
     _h_goodfri   ({_expand_dm("10-04")}),
     _h_vesakha   ({_expand_dm("09-05")}, {hyear=>2553}),
     _h_ascension ({_expand_dm("21-05")}),
+    _h_pelection ({_expand_dm("08-07")}, {}),
     _h_isramiraj ({_expand_dm("20-07")}),
     ($eidulf2009 =
     _h_eidulf    ({_expand_dm("21-09")}, {hyear=>1430, day=>1})),
@@ -542,12 +561,16 @@ $year_holidays{2014} = [
     _h_mawlid    ({_expand_dm("14-01")}),
     _h_chnewyear ({_expand_dm("31-01")}, {hyear=>2565}),
     _h_nyepi     ({_expand_dm("31-03")}, {hyear=>1936}),
-    _h_election  ({_expand_dm("09-04")}, {decree_date=>'2014-04-03', decree_note=>"Keppres 14/2014"}),
+    _h_gelection ({_expand_dm("09-04")}, {decree_date=>'2014-04-03', decree_note=>"Keppres 14/2014"}),
     _h_goodfri   ({_expand_dm("18-04")}),
     _h_vesakha   ({_expand_dm("15-05")}, {hyear=>2558}),
     _h_isramiraj ({_expand_dm("27-05")}),
     _h_ascension ({_expand_dm("29-05")}),
 
+    # sudah ditetapkan KPU tapi belum ada keppres
+    _make_tentative(
+        _h_pelection ({_expand_dm("09-07")}, {}),
+    ),
     ($eidulf2014 =
     _h_eidulf    ({_expand_dm("28-07")}, {hyear=>1435, day=>1}),
     _h_eidulf    ({_expand_dm("29-07")}, {hyear=>1435, day=>2})),
@@ -611,69 +634,84 @@ my $res = gen_read_table_func(
     table_spec => {
         fields => {
             date => {
-                schema => 'str*',
-                index => 0,
+                schema     => 'str*',
+                pos        => 0,
                 searchable => 0,
             },
             day => {
-                schema => 'int*',
-                index => 1,
+                schema     => 'int*',
+                pos        => 1,
             },
             month => {
-                schema => 'int*',
-                index => 2,
+                schema     => 'int*',
+                pos        => 2,
             },
             year => {
-                schema => 'int*',
-                index => 3,
+                schema     => 'int*',
+                pos        => 3,
             },
             dow => {
                 schema => 'int*',
-                summary => 'Day of week (1-7, Monday is 1)',
-                index => 4,
+                summary    => 'Day of week (1-7, Monday is 1)',
+                pos        => 4,
             },
             eng_name => {
-                schema => 'str*',
-                summary => 'English name',
-                index => 5,
+                schema     => 'str*',
+                summary    => 'English name',
+                pos        => 5,
                 filterable => 0,
-                sortable => 0,
+                sortable   => 0,
             },
             ind_name => {
-                schema => 'str*',
-                summary => 'Indonesian name',
-                index => 6,
+                schema     => 'str*',
+                summary    => 'Indonesian name',
+                pos        => 6,
                 filterable => 0,
-                sortable => 0,
+                sortable   => 0,
             },
-            en_aliases => {
-                schema => ['array*'=>{of=>'str*'}],
-                summary => 'English other names, if any',
-                index => 7,
+            eng_aliases => {
+                schema     => ['array*'=>{of=>'str*'}],
+                summary    => 'English other names, if any',
+                pos        => 7,
                 filterable => 0,
-                sortable => 0,
+                sortable   => 0,
             },
-            id_aliases => {
-                schema => ['array*'=>{of=>'str*'}],
-                summary => 'Indonesian other names, if any',
-                index => 8,
+            ind_aliases => {
+                schema     => ['array*'=>{of=>'str*'}],
+                summary    => 'Indonesian other names, if any',
+                pos        => 8,
                 filterable => 0,
-                sortable => 0,
+                sortable   => 0,
             },
             is_holiday => {
-                schema => 'bool*',
-                index => 9,
+                schema     => 'bool*',
+                pos        => 9,
             },
             is_joint_leave => {
-                schema => 'bool*',
-                summary => 'Whether this date is a joint leave day '.
+                schema     => 'bool*',
+                summary    => 'Whether this date is a joint leave day '.
                     '("cuti bersama")',
-                index => 10,
+                pos        => 10,
+            },
+            decree_date => {
+                schema     => 'str',
+                pos        => 11,
+                sortable   => 1,
+            },
+            decree_note => {
+                schema     => 'str',
+                pos        => 12,
+                sortable   => 0,
+            },
+            note => {
+                schema     => 'str',
+                pos        => 13,
+                sortable   => 0,
             },
             tags => {
-                schema => 'array*',
-                index => 11,
-                sortable => 0,
+                schema     => 'array*',
+                pos        => 14,
+                sortable   => 0,
             },
         },
         pk => 'date',
@@ -683,6 +721,9 @@ my $res = gen_read_table_func(
 
 die "BUG: Can't generate func: $res->[0] - $res->[1]"
     unless $res->[0] == 200;
+
+$SPEC{list_id_holidays}{args}{year}{pos}  = 0;
+$SPEC{list_id_holidays}{args}{month}{pos} = 1;
 
 my $AVAILABLE_YEARS =
     "Contains data from years $min_year to $max_year (joint leave days until\n".
@@ -821,7 +862,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.16
+version 0.17
 
 =head1 SYNOPSIS
 
@@ -859,16 +900,16 @@ version 0.16
 
  # sample result
  [200, "OK", [
-   {date       => '2011-02-16',
-    day        => 16,
-    month      => 2,
-    year       => 2011,
+   {date        => '2011-02-16',
+    day         => 16,
+    month       => 2,
+    year        => 2011,
     ind_name    => 'Maulid Nabi Muhammad',
     eng_name    => 'Mawlid',
-    en_aliases => ['Mawlid An-Nabi'],
-    id_aliases => ['Maulud'],
-    is_holiday => 1,
-    tags       => [qw/religious religion=islam calendar=lunar/],
+    eng_aliases => ['Mawlid An-Nabi'],
+    ind_aliases => ['Maulud'],
+    is_holiday  => 1,
+    tags        => [qw/religious religion=islam calendar=lunar/],
    },
    ...
  ]];
@@ -1092,6 +1133,94 @@ Only return records where the 'day' field is less than specified value.
 
 Only return records where the 'day' field is greater than specified value.
 
+=item * B<decree_date> => I<str>
+
+Only return records where the 'decree_date' field equals specified value.
+
+=item * B<decree_date.contains> => I<str>
+
+Only return records where the 'decree_date' field contains specified text.
+
+=item * B<decree_date.in> => I<array>
+
+Only return records where the 'decree_date' field is in the specified values.
+
+=item * B<decree_date.is> => I<str>
+
+Only return records where the 'decree_date' field equals specified value.
+
+=item * B<decree_date.isnt> => I<str>
+
+Only return records where the 'decree_date' field does not equal specified value.
+
+=item * B<decree_date.max> => I<str>
+
+Only return records where the 'decree_date' field is less than or equal to specified value.
+
+=item * B<decree_date.min> => I<str>
+
+Only return records where the 'decree_date' field is greater than or equal to specified value.
+
+=item * B<decree_date.not_contains> => I<str>
+
+Only return records where the 'decree_date' field does not contain specified text.
+
+=item * B<decree_date.not_in> => I<array>
+
+Only return records where the 'decree_date' field is not in the specified values.
+
+=item * B<decree_date.xmax> => I<str>
+
+Only return records where the 'decree_date' field is less than specified value.
+
+=item * B<decree_date.xmin> => I<str>
+
+Only return records where the 'decree_date' field is greater than specified value.
+
+=item * B<decree_note> => I<str>
+
+Only return records where the 'decree_note' field equals specified value.
+
+=item * B<decree_note.contains> => I<str>
+
+Only return records where the 'decree_note' field contains specified text.
+
+=item * B<decree_note.in> => I<array>
+
+Only return records where the 'decree_note' field is in the specified values.
+
+=item * B<decree_note.is> => I<str>
+
+Only return records where the 'decree_note' field equals specified value.
+
+=item * B<decree_note.isnt> => I<str>
+
+Only return records where the 'decree_note' field does not equal specified value.
+
+=item * B<decree_note.max> => I<str>
+
+Only return records where the 'decree_note' field is less than or equal to specified value.
+
+=item * B<decree_note.min> => I<str>
+
+Only return records where the 'decree_note' field is greater than or equal to specified value.
+
+=item * B<decree_note.not_contains> => I<str>
+
+Only return records where the 'decree_note' field does not contain specified text.
+
+=item * B<decree_note.not_in> => I<array>
+
+Only return records where the 'decree_note' field is not in the specified values.
+
+=item * B<decree_note.xmax> => I<str>
+
+Only return records where the 'decree_note' field is less than specified value.
+
+=item * B<decree_note.xmin> => I<str>
+
+Only return records where the 'decree_note' field is greater than specified value.
+
 =item * B<detail> => I<bool> (default: 0)
 
 Return array of full records instead of just ID fields.
@@ -1197,6 +1326,50 @@ Only return records where the 'month' field is less than specified value.
 =item * B<month.xmin> => I<int>
 
 Only return records where the 'month' field is greater than specified value.
+
+=item * B<note> => I<str>
+
+Only return records where the 'note' field equals specified value.
+
+=item * B<note.contains> => I<str>
+
+Only return records where the 'note' field contains specified text.
+
+=item * B<note.in> => I<array>
+
+Only return records where the 'note' field is in the specified values.
+
+=item * B<note.is> => I<str>
+
+Only return records where the 'note' field equals specified value.
+
+=item * B<note.isnt> => I<str>
+
+Only return records where the 'note' field does not equal specified value.
+
+=item * B<note.max> => I<str>
+
+Only return records where the 'note' field is less than or equal to specified value.
+
+=item * B<note.min> => I<str>
+
+Only return records where the 'note' field is greater than or equal to specified value.
+
+=item * B<note.not_contains> => I<str>
+
+Only return records where the 'note' field does not contain specified text.
+
+=item * B<note.not_in> => I<array>
+
+Only return records where the 'note' field is not in the specified values.
+
+=item * B<note.xmax> => I<str>
+
+Only return records where the 'note' field is less than specified value.
+
+=item * B<note.xmin> => I<str>
+
+Only return records where the 'note' field is greater than specified value.
 
 =item * B<q> => I<str>
 
@@ -1324,6 +1497,9 @@ year.
 =head1 SEE ALSO
 
 This API will also be available on GudangAPI, http://gudangapi.com/
+
+Aside from national holidays, some provinces declare their own (e.g. governor
+election day for East Java province, etc).
 
 =head1 HOMEPAGE
 

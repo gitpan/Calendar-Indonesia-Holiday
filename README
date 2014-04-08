@@ -2,7 +2,7 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    version 0.16
+    version 0.17
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -39,16 +39,16 @@ SYNOPSIS
 
      # sample result
      [200, "OK", [
-       {date       => '2011-02-16',
-        day        => 16,
-        month      => 2,
-        year       => 2011,
+       {date        => '2011-02-16',
+        day         => 16,
+        month       => 2,
+        year        => 2011,
         ind_name    => 'Maulid Nabi Muhammad',
         eng_name    => 'Mawlid',
-        en_aliases => ['Mawlid An-Nabi'],
-        id_aliases => ['Maulud'],
-        is_holiday => 1,
-        tags       => [qw/religious religion=islam calendar=lunar/],
+        eng_aliases => ['Mawlid An-Nabi'],
+        ind_aliases => ['Maulud'],
+        is_holiday  => 1,
+        tags        => [qw/religious religion=islam calendar=lunar/],
        },
        ...
      ]];
@@ -266,6 +266,116 @@ FUNCTIONS
         Only return records where the 'day' field is greater than specified
         value.
 
+    *   decree_date => *str*
+
+        Only return records where the 'decree_date' field equals specified
+        value.
+
+    *   decree_date.contains => *str*
+
+        Only return records where the 'decree_date' field contains specified
+        text.
+
+    *   decree_date.in => *array*
+
+        Only return records where the 'decree_date' field is in the
+        specified values.
+
+    *   decree_date.is => *str*
+
+        Only return records where the 'decree_date' field equals specified
+        value.
+
+    *   decree_date.isnt => *str*
+
+        Only return records where the 'decree_date' field does not equal
+        specified value.
+
+    *   decree_date.max => *str*
+
+        Only return records where the 'decree_date' field is less than or
+        equal to specified value.
+
+    *   decree_date.min => *str*
+
+        Only return records where the 'decree_date' field is greater than or
+        equal to specified value.
+
+    *   decree_date.not_contains => *str*
+
+        Only return records where the 'decree_date' field does not contain
+        specified text.
+
+    *   decree_date.not_in => *array*
+
+        Only return records where the 'decree_date' field is not in the
+        specified values.
+
+    *   decree_date.xmax => *str*
+
+        Only return records where the 'decree_date' field is less than
+        specified value.
+
+    *   decree_date.xmin => *str*
+
+        Only return records where the 'decree_date' field is greater than
+        specified value.
+
+    *   decree_note => *str*
+
+        Only return records where the 'decree_note' field equals specified
+        value.
+
+    *   decree_note.contains => *str*
+
+        Only return records where the 'decree_note' field contains specified
+        text.
+
+    *   decree_note.in => *array*
+
+        Only return records where the 'decree_note' field is in the
+        specified values.
+
+    *   decree_note.is => *str*
+
+        Only return records where the 'decree_note' field equals specified
+        value.
+
+    *   decree_note.isnt => *str*
+
+        Only return records where the 'decree_note' field does not equal
+        specified value.
+
+    *   decree_note.max => *str*
+
+        Only return records where the 'decree_note' field is less than or
+        equal to specified value.
+
+    *   decree_note.min => *str*
+
+        Only return records where the 'decree_note' field is greater than or
+        equal to specified value.
+
+    *   decree_note.not_contains => *str*
+
+        Only return records where the 'decree_note' field does not contain
+        specified text.
+
+    *   decree_note.not_in => *array*
+
+        Only return records where the 'decree_note' field is not in the
+        specified values.
+
+    *   decree_note.xmax => *str*
+
+        Only return records where the 'decree_note' field is less than
+        specified value.
+
+    *   decree_note.xmin => *str*
+
+        Only return records where the 'decree_note' field is greater than
+        specified value.
+
     *   detail => *bool* (default: 0)
 
         Return array of full records instead of just ID fields.
@@ -391,6 +501,58 @@ FUNCTIONS
 
         Only return records where the 'month' field is greater than
         specified value.
+
+    *   note => *str*
+
+        Only return records where the 'note' field equals specified value.
+
+    *   note.contains => *str*
+
+        Only return records where the 'note' field contains specified text.
+
+    *   note.in => *array*
+
+        Only return records where the 'note' field is in the specified
+        values.
+
+    *   note.is => *str*
+
+        Only return records where the 'note' field equals specified value.
+
+    *   note.isnt => *str*
+
+        Only return records where the 'note' field does not equal specified
+        value.
+
+    *   note.max => *str*
+
+        Only return records where the 'note' field is less than or equal to
+        specified value.
+
+    *   note.min => *str*
+
+        Only return records where the 'note' field is greater than or equal
+        to specified value.
+
+    *   note.not_contains => *str*
+
+        Only return records where the 'note' field does not contain
+        specified text.
+
+    *   note.not_in => *array*
+
+        Only return records where the 'note' field is not in the specified
+        values.
+
+    *   note.xmax => *str*
+
+        Only return records where the 'note' field is less than specified
+        value.
+
+    *   note.xmin => *str*
+
+        Only return records where the 'note' field is greater than specified
+        value.
 
     *   q => *str*
 
@@ -523,6 +685,9 @@ FAQ
 
 SEE ALSO
     This API will also be available on GudangAPI, http://gudangapi.com/
+
+    Aside from national holidays, some provinces declare their own (e.g.
+    governor election day for East Java province, etc).
 
 HOMEPAGE
     Please visit the project's homepage at

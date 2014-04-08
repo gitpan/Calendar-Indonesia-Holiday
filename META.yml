@@ -20,7 +20,7 @@ requires:
   Data::Clone: 0
   DateTime: 0
   Log::Any: 0
-  Perinci::CmdLine: 0
+  Perinci::CmdLine: 1.06
   Perinci::Sub::Gen::AccessTable: 0.16
   Perinci::Sub::Util: 0.32
   Rinci: 0.13
@@ -30,7 +30,7 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Calendar-Indonesia-Holiday
   homepage: https://metacpan.org/release/Calendar-Indonesia-Holiday
   repository: git://github.com/sharyanto/perl-Calendar-Indonesia-Holiday.git
-version: 0.16
+version: 0.17
 x_Dist_Zilla:
   perl:
     version: 5.018001
