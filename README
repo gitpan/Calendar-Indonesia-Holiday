@@ -2,7 +2,7 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    version 0.15
+    version 0.16
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -72,9 +72,9 @@ DESCRIPTION
     This module has Rinci metadata.
 
 FUNCTIONS
-    None are exported by default, but they are exportable.
-
   count_id_workdays(%args) -> [status, msg, result, meta]
+    Count working days for a certain period.
+
     Working day is defined as day that is not Saturday*/Sunday/holiday/joint
     leave days*. If work*saturdays is set to true, Saturdays are also
     counted as working days. If observe*joint_leaves is set to false, joint
@@ -108,14 +108,18 @@ FUNCTIONS
 
     Return value:
 
-    Returns an enveloped result (an array). First element (status) is an
-    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
-    function error). Second element (msg) is a string containing error
-    message, or 'OK' if status is 200. Third element (result) is optional,
-    the actual result. Fourth element (meta) is called result metadata and
-    is optional, a hash that contains extra information.
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
 
   enum_id_workdays(%args) -> [status, msg, result, meta]
+    Enumerate working days for a certain period.
+
     Working day is defined as day that is not Saturday*/Sunday/holiday/joint
     leave days*. If work*saturdays is set to true, Saturdays are also
     counted as working days. If observe*joint_leaves is set to false, joint
@@ -149,14 +153,18 @@ FUNCTIONS
 
     Return value:
 
-    Returns an enveloped result (an array). First element (status) is an
-    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
-    function error). Second element (msg) is a string containing error
-    message, or 'OK' if status is 200. Third element (result) is optional,
-    the actual result. Fourth element (meta) is called result metadata and
-    is optional, a hash that contains extra information.
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
 
   list_id_holidays(%args) -> [status, msg, result, meta]
+    List Indonesian holidays in calendar.
+
     List holidays and joint leave days ("cuti bersama").
 
     Contains data from years 2002 to 2014 (joint leave days until 2014).
@@ -484,12 +492,14 @@ FUNCTIONS
 
     Return value:
 
-    Returns an enveloped result (an array). First element (status) is an
-    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
-    function error). Second element (msg) is a string containing error
-    message, or 'OK' if status is 200. Third element (result) is optional,
-    the actual result. Fourth element (meta) is called result metadata and
-    is optional, a hash that contains extra information.
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
 
 FAQ
   What is "joint leave"?
@@ -534,7 +544,7 @@ AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2013 by Steven Haryanto.
+    This software is copyright (c) 2014 by Steven Haryanto.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.

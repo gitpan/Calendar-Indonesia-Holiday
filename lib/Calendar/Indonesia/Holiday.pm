@@ -19,7 +19,7 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.15'; # VERSION
+our $VERSION = '0.16'; # VERSION
 
 our %SPEC;
 my @fixed_holidays = (
@@ -42,14 +42,15 @@ my @fixed_holidays = (
         tags       => [qw/international religious religion=christianity/],
     },
 
-    # labor day becomes national holiday since 2014 (decreed by president @ apr
-    # 29, 2013.
     my $labord = {
-        day        => 1, month => 5,
-        year_start => 2014,
-        ind_name   => "Hari Buruh",
-        eng_name   => "Labor Day",
-        tags       => [qw/international/],
+        day         => 1, month => 5,
+        year_start  => 2014,
+        ind_name    => "Hari Buruh",
+        eng_name    => "Labor Day",
+        tags        => [qw/international/],
+        decree_date => "2013-04-29",
+        decree_note => "Labor day becomes national holiday since 2014, ".
+            "decreed by president",
     },
 );
 
@@ -192,6 +193,15 @@ sub _h_hijra {
     $r->{en_aliases} = [];
     $r->{is_holiday} = 1;
     $r->{tags}       = [qw/calendar=lunar/];
+    ($r);
+}
+
+sub _h_election {
+    my ($r, $opts) = @_;
+    $r->{ind_name}    = "Pemilu";
+    $r->{eng_name}    = "General Election";
+    $r->{is_holiday} = 1;
+    $r->{tags}       = [qw/political/];
     ($r);
 }
 
@@ -532,6 +542,7 @@ $year_holidays{2014} = [
     _h_mawlid    ({_expand_dm("14-01")}),
     _h_chnewyear ({_expand_dm("31-01")}, {hyear=>2565}),
     _h_nyepi     ({_expand_dm("31-03")}, {hyear=>1936}),
+    _h_election  ({_expand_dm("09-04")}, {decree_date=>'2014-04-03', decree_note=>"Keppres 14/2014"}),
     _h_goodfri   ({_expand_dm("18-04")}),
     _h_vesakha   ({_expand_dm("15-05")}, {hyear=>2558}),
     _h_isramiraj ({_expand_dm("27-05")}),
@@ -810,7 +821,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.15
+version 0.16
 
 =head1 SYNOPSIS
 
@@ -884,9 +895,9 @@ This module has L<Rinci> metadata.
 =head1 FUNCTIONS
 
 
-None are exported by default, but they are exportable.
-
 =head2 count_id_workdays(%args) -> [status, msg, result, meta]
+
+Count working days for a certain period.
 
 Working day is defined as day that is not SaturdayI</Sunday/holiday/joint leave
 days>. If workI<saturdays is set to true, Saturdays are also counted as working
@@ -926,10 +937,20 @@ If set to 1, Saturday is a working day.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 enum_id_workdays(%args) -> [status, msg, result, meta]
 
+Enumerate working days for a certain period.
+
 Working day is defined as day that is not SaturdayI</Sunday/holiday/joint leave
 days>. If workI<saturdays is set to true, Saturdays are also counted as working
 days. If observe>joint_leaves is set to false, joint leave days are also counted
@@ -968,9 +989,19 @@ If set to 1, Saturday is a working day.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 list_id_holidays(%args) -> [status, msg, result, meta]
+
+List Indonesian holidays in calendar.
 
 List holidays and joint leave days ("cuti bersama").
 
@@ -1258,7 +1289,14 @@ Only return records where the 'year' field is greater than specified value.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
 
 =head1 FAQ
 
@@ -1309,7 +1347,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Steven Haryanto.
+This software is copyright (c) 2014 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
