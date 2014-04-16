@@ -1,12 +1,13 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 use 5.010;
 use strict;
 use warnings;
 
+use Calendar::Indonesia::Holiday; # for when fatpacked
 use Perinci::CmdLine 1.06;
 
-our $VERSION = '0.17'; # VERSION
+our $VERSION = '0.18'; # VERSION
 
 Perinci::CmdLine->new(url => '/Calendar/Indonesia/Holiday/list_id_holidays')->
     run;
@@ -27,7 +28,7 @@ list-id-holidays - List Indonesian holidays
 
 =head1 VERSION
 
-version 0.17
+version 0.18
 
 =head1 SYNOPSIS
 

@@ -6,8 +6,8 @@ use warnings;
 use experimental 'smartmatch';
 use Log::Any '$log';
 
-use Data::Clone;
 use DateTime;
+use Function::Fallback::CoreOrPP qw(clone);
 use Perinci::Sub::Gen::AccessTable qw(gen_read_table_func);
 use Perinci::Sub::Util qw(err);
 
@@ -19,7 +19,8 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.17'; # VERSION
+our $VERSION = '0.18'; # VERSION
+our $DATE = '2014-04-16'; # DATE
 
 our %SPEC;
 my @fixed_holidays = (
@@ -196,10 +197,10 @@ sub _h_hijra {
     ($r);
 }
 
-sub _h_gelection {
+sub _h_lelection {
     my ($r, $opts) = @_;
-    $r->{ind_name}    = "Pemilu";
-    $r->{eng_name}    = "General Election";
+    $r->{ind_name}    = "Pemilu Legislatif (Pileg)";
+    $r->{eng_name}    = "Legislative Election";
     $r->{is_holiday}  = 1;
     $r->{tags}        = [qw/political/];
 
@@ -211,7 +212,7 @@ sub _h_gelection {
 
 sub _h_pelection {
     my ($r, $opts) = @_;
-    $r->{ind_name}    = "Pilpres";
+    $r->{ind_name}    = "Pemilu Presiden (Pilpres)";
     $r->{eng_name}    = "Presidential Election";
     $r->{is_holiday}  = 1;
     $r->{tags}        = [qw/political/];
@@ -439,7 +440,7 @@ $year_holidays{2009} = [
     _h_chnewyear ({_expand_dm("26-01")}, {hyear=>2560}),
     _h_mawlid    ({_expand_dm("09-03")}),
     _h_nyepi     ({_expand_dm("26-03")}, {hyear=>1931}),
-    _h_gelection ({_expand_dm("09-04")}, {}),
+    _h_lelection ({_expand_dm("09-04")}, {}),
     _h_goodfri   ({_expand_dm("10-04")}),
     _h_vesakha   ({_expand_dm("09-05")}, {hyear=>2553}),
     _h_ascension ({_expand_dm("21-05")}),
@@ -561,7 +562,7 @@ $year_holidays{2014} = [
     _h_mawlid    ({_expand_dm("14-01")}),
     _h_chnewyear ({_expand_dm("31-01")}, {hyear=>2565}),
     _h_nyepi     ({_expand_dm("31-03")}, {hyear=>1936}),
-    _h_gelection ({_expand_dm("09-04")}, {decree_date=>'2014-04-03', decree_note=>"Keppres 14/2014"}),
+    _h_lelection ({_expand_dm("09-04")}, {decree_date=>'2014-04-03', decree_note=>"Keppres 14/2014"}),
     _h_goodfri   ({_expand_dm("18-04")}),
     _h_vesakha   ({_expand_dm("15-05")}, {hyear=>2558}),
     _h_isramiraj ({_expand_dm("27-05")}),
@@ -862,7 +863,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.17
+version 0.18
 
 =head1 SYNOPSIS
 
