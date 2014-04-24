@@ -25,12 +25,15 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "DateTime" => 0,
     "Function::Fallback::CoreOrPP" => 0,
+    "List::MoreUtils" => 0,
     "Log::Any" => 0,
+    "Moo" => 0,
     "Perinci::CmdLine" => "1.06",
     "Perinci::Sub::Gen::AccessTable" => "0.16",
     "Perinci::Sub::Util" => "0.32",
     "Rinci" => "0.13",
-    "experimental" => 0
+    "experimental" => 0,
+    "namespace::clean" => 0
   },
   "TEST_REQUIRES" => {
     "File::Spec" => 0,
@@ -38,7 +41,7 @@ my %WriteMakefileArgs = (
     "IPC::Open3" => 0,
     "Test::More" => "0.96"
   },
-  "VERSION" => "0.18",
+  "VERSION" => "0.19",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -51,13 +54,16 @@ my %FallbackPrereqs = (
   "Function::Fallback::CoreOrPP" => 0,
   "IO::Handle" => 0,
   "IPC::Open3" => 0,
+  "List::MoreUtils" => 0,
   "Log::Any" => 0,
+  "Moo" => 0,
   "Perinci::CmdLine" => "1.06",
   "Perinci::Sub::Gen::AccessTable" => "0.16",
   "Perinci::Sub::Util" => "0.32",
   "Rinci" => "0.13",
   "Test::More" => "0.96",
-  "experimental" => 0
+  "experimental" => 0,
+  "namespace::clean" => 0
 );
 
 

@@ -7,7 +7,10 @@ use warnings;
 use Calendar::Indonesia::Holiday; # for when fatpacked
 use Perinci::CmdLine 1.06;
 
-our $VERSION = '0.18'; # VERSION
+our $VERSION = '0.19'; # VERSION
+our $DATE = '2014-04-24'; # DATE
+
+$ENV{ANSITABLE_STYLE_SETS} //= '[["Calendar::Indonesia::Holiday::HolidayType",{"holiday_bgcolor":"330000", "joint_leave_bgcolor":"333300"}]]';
 
 Perinci::CmdLine->new(url => '/Calendar/Indonesia/Holiday/list_id_holidays')->
     run;
@@ -28,7 +31,7 @@ list-id-holidays - List Indonesian holidays
 
 =head1 VERSION
 
-version 0.18
+version 0.19
 
 =head1 SYNOPSIS
 

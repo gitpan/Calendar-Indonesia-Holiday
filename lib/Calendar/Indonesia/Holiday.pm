@@ -19,8 +19,8 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.18'; # VERSION
-our $DATE = '2014-04-16'; # DATE
+our $VERSION = '0.19'; # VERSION
+our $DATE = '2014-04-24'; # DATE
 
 our %SPEC;
 my @fixed_holidays = (
@@ -863,7 +863,11 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.18
+version 0.19
+
+=head1 RELEASE DATE
+
+2014-04-24
 
 =head1 SYNOPSIS
 

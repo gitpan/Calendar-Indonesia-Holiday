@@ -9,6 +9,7 @@ README
 bin/list-id-holidays
 dist.ini
 lib/Calendar/Indonesia/Holiday.pm
+lib/Text/ANSITable/StyleSet/Calendar/Indonesia/Holiday/HolidayType.pm
 t/00-compile.t
 t/01-basics.t
 t/release-pod-coverage.t

@@ -31,12 +31,15 @@
          "requires" : {
             "DateTime" : "0",
             "Function::Fallback::CoreOrPP" : "0",
+            "List::MoreUtils" : "0",
             "Log::Any" : "0",
+            "Moo" : "0",
             "Perinci::CmdLine" : "1.06",
             "Perinci::Sub::Gen::AccessTable" : "0.16",
             "Perinci::Sub::Util" : "0.32",
             "Rinci" : "0.13",
             "experimental" : "0",
+            "namespace::clean" : "0",
             "perl" : "5.010001"
          }
       },
@@ -61,7 +64,7 @@
          "web" : "https://github.com/sharyanto/perl-Calendar-Indonesia-Holiday"
       }
    },
-   "version" : "0.18",
+   "version" : "0.19",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018002"
@@ -200,6 +203,11 @@
                         "class" : "Pod::Weaver::Section::Version",
                         "name" : "@Author::SHARYANTO/Version",
                         "version" : "4.006"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::ReleaseDate",
+                        "name" : "@Author::SHARYANTO/ReleaseDate",
+                        "version" : "0.01"
                      },
                      {
                         "class" : "Pod::Weaver::Section::Region",

@@ -2,7 +2,10 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    version 0.18
+    version 0.19
+
+RELEASE DATE
+    2014-04-24
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
