@@ -19,8 +19,8 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.19'; # VERSION
-our $DATE = '2014-04-24'; # DATE
+our $VERSION = '0.20'; # VERSION
+our $DATE = '2014-06-26'; # DATE
 
 our %SPEC;
 my @fixed_holidays = (
@@ -635,7 +635,7 @@ my $res = gen_read_table_func(
     table_spec => {
         fields => {
             date => {
-                schema     => 'str*',
+                schema     => 'date*',
                 pos        => 0,
                 searchable => 0,
             },
@@ -752,6 +752,7 @@ sub _check_date_arg {
 }
 
 $SPEC{enum_id_workdays} = {
+    v => 1.1,
     summary => 'Enumerate working days for a certain period',
     description => <<"_",
 
@@ -764,32 +765,34 @@ $AVAILABLE_YEARS
 
 _
     args => {
-        start_date => ['str*' => {
+        start_date => {
             summary => 'Starting date',
+            schema  => 'str*',
             description => <<'_',
 
 Defaults to start of current month. Either a string in the form of "YYYY-MM-DD",
 or a DateTime object, is accepted.
 
 _
-        }],
-        end_date => ['str*' => {
+        },
+        end_date => {
             summary => 'End date',
+            schema  => 'str*',
             description => <<'_',
 
 Defaults to end of current month. Either a string in the form of "YYYY-MM-DD",
 or a DateTime object, is accepted.
 
 _
-        }],
-        work_saturdays => ['bool' => {
+        },
+        work_saturdays => {
+            schema  => ['bool' => {default=>0}],
             summary => 'If set to 1, Saturday is a working day',
-            default => 0,
-        }],
-        observe_joint_leaves => ['bool' => {
+        },
+        observe_joint_leaves => {
             summary => 'If set to 0, do not observe joint leave as holidays',
-            default => 1,
-        }],
+            schema  => ['bool' => {default => 1}],
+        },
     },
 };
 sub enum_id_workdays {
@@ -863,11 +866,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-version 0.19
-
-=head1 RELEASE DATE
-
-2014-04-24
+This document describes version 0.20 of Calendar::Indonesia::Holiday (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-06-26.
 
 =head1 SYNOPSIS
 
@@ -1058,47 +1057,39 @@ Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<date> => I<str>
+=item * B<date> => I<date>
 
 Only return records where the 'date' field equals specified value.
-
-=item * B<date.contains> => I<str>
-
-Only return records where the 'date' field contains specified text.
 
 =item * B<date.in> => I<array>
 
 Only return records where the 'date' field is in the specified values.
 
-=item * B<date.is> => I<str>
+=item * B<date.is> => I<date>
 
 Only return records where the 'date' field equals specified value.
 
-=item * B<date.isnt> => I<str>
+=item * B<date.isnt> => I<date>
 
 Only return records where the 'date' field does not equal specified value.
 
-=item * B<date.max> => I<str>
+=item * B<date.max> => I<date>
 
 Only return records where the 'date' field is less than or equal to specified value.
 
-=item * B<date.min> => I<str>
+=item * B<date.min> => I<date>
 
 Only return records where the 'date' field is greater than or equal to specified value.
-
-=item * B<date.not_contains> => I<str>
-
-Only return records where the 'date' field does not contain specified text.
 
 =item * B<date.not_in> => I<array>
 
 Only return records where the 'date' field is not in the specified values.
 
-=item * B<date.xmax> => I<str>
+=item * B<date.xmax> => I<date>
 
 Only return records where the 'date' field is less than specified value.
 
-=item * B<date.xmin> => I<str>
+=item * B<date.xmin> => I<date>
 
 Only return records where the 'date' field is greater than specified value.
 

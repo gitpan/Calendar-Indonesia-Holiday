@@ -7,8 +7,8 @@ use warnings;
 use Calendar::Indonesia::Holiday; # for when fatpacked
 use Perinci::CmdLine 1.06;
 
-our $VERSION = '0.19'; # VERSION
-our $DATE = '2014-04-24'; # DATE
+our $VERSION = '0.20'; # VERSION
+our $DATE = '2014-06-26'; # DATE
 
 $ENV{ANSITABLE_STYLE_SETS} //= '[["Calendar::Indonesia::Holiday::HolidayType",{"holiday_bgcolor":"330000", "joint_leave_bgcolor":"333300"}]]';
 
@@ -31,7 +31,7 @@ list-id-holidays - List Indonesian holidays
 
 =head1 VERSION
 
-version 0.19
+This document describes version 0.20 of list-id-holidays (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-06-26.
 
 =head1 SYNOPSIS
 
