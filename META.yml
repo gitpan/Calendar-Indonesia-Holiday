@@ -24,7 +24,7 @@ requires:
   Moo: '0'
   Perinci::CmdLine: '1.06'
   Perinci::Sub::Gen::AccessTable: '0.37'
-  Perinci::Sub::Util: '0.32'
+  Perinci::Sub::Util: '0.38'
   Rinci: '0.13'
   experimental: '0'
   namespace::clean: '0'
@@ -33,7 +33,7 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Calendar-Indonesia-Holiday
   homepage: https://metacpan.org/release/Calendar-Indonesia-Holiday
   repository: git://github.com/sharyanto/perl-Calendar-Indonesia-Holiday.git
-version: '0.20'
+version: '0.21'
 x_Dist_Zilla:
   perl:
     version: '5.018002'
@@ -226,7 +226,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Rinci::Validate
       name: '@Author::SHARYANTO/Rinci::Validate'
-      version: '0.13'
+      version: '0.14'
     -
       class: Dist::Zilla::Plugin::SHARYANTO::OurPkgVersion
       name: '@Author::SHARYANTO/SHARYANTO::OurPkgVersion'

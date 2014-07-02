@@ -9,7 +9,7 @@ use Log::Any '$log';
 use DateTime;
 use Function::Fallback::CoreOrPP qw(clone);
 use Perinci::Sub::Gen::AccessTable qw(gen_read_table_func);
-use Perinci::Sub::Util qw(err);
+use Perinci::Sub::Util qw(err gen_modified_sub);
 
 require Exporter;
 our @ISA = qw(Exporter);
@@ -19,8 +19,8 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.20'; # VERSION
-our $DATE = '2014-06-26'; # DATE
+our $VERSION = '0.21'; # VERSION
+our $DATE = '2014-07-02'; # DATE
 
 our %SPEC;
 my @fixed_holidays = (
@@ -841,15 +841,18 @@ sub enum_id_workdays {
     [200, "OK", \@wd];
 }
 
-$meta = clone($SPEC{enum_id_workdays});
-$meta->{summary} = "Count working days for a certain period";
-$SPEC{count_id_workdays} = $meta;
-sub count_id_workdays {
-    my $res = enum_id_workdays(@_);
-    return $res unless $res->[0] == 200;
-    $res->[2] = @{$res->[2]};
-    $res;
-}
+gen_modified_sub(
+    output_name => 'count_id_workdays',
+    summary     => "Count working days for a certain period",
+
+    base_name   => 'enum_id_workdays',
+    output_code => sub {
+        my $res = enum_id_workdays(@_);
+        return $res unless $res->[0] == 200;
+        $res->[2] = @{$res->[2]};
+        $res;
+    },
+);
 
 1;
 # ABSTRACT: List Indonesian public holidays
@@ -866,7 +869,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-This document describes version 0.20 of Calendar::Indonesia::Holiday (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-06-26.
+This document describes version 0.21 of Calendar::Indonesia::Holiday (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-07-02.
 
 =head1 SYNOPSIS
 
