@@ -19,8 +19,8 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.21'; # VERSION
-our $DATE = '2014-07-02'; # DATE
+our $VERSION = '0.22'; # VERSION
+our $DATE = '2014-08-06'; # DATE
 
 our %SPEC;
 my @fixed_holidays = (
@@ -585,6 +585,34 @@ $year_holidays{2014} = [
     _jointlv     ({_expand_dm("26-12")}, {holiday=>$christmas}),
 ];
 
+# decreed may 7, 2014
+#
+# Surat Keputusan Bersama Libur Nasional dan Cuti Bersama
+#
+# ref:
+# - http://nasional.kompas.com/read/2014/05/07/1805155/Hari.Libur.dan.Cuti.Bersama.2015.Banyak.Long.Weekend.dan.Harpitnas.3
+my $eidulf2015;
+$year_holidays{2015} = [
+    _h_mawlid    ({_expand_dm("03-01")}),
+    _h_chnewyear ({_expand_dm("19-02")}, {hyear=>2566}),
+    _h_nyepi     ({_expand_dm("21-03")}, {hyear=>1937}),
+    _h_goodfri   ({_expand_dm("03-04")}),
+    _h_ascension ({_expand_dm("14-05")}),
+    _h_isramiraj ({_expand_dm("16-05")}),
+    _h_vesakha   ({_expand_dm("02-06")}, {hyear=>2559}),
+
+    ($eidulf2015 =
+    _h_eidulf    ({_expand_dm("17-07")}, {hyear=>1436, day=>1}),
+    _h_eidulf    ({_expand_dm("18-07")}, {hyear=>1436, day=>2})),
+    _h_eidula    ({_expand_dm("24-09")}, {hyear=>1436}),
+    _h_hijra     ({_expand_dm("14-10")}, {hyear=>1437}),
+
+    _jointlv     ({_expand_dm("16-07")}, {holiday=>$eidulf2015}),
+    _jointlv     ({_expand_dm("20-07")}, {holiday=>$eidulf2015}),
+    _jointlv     ({_expand_dm("21-07")}, {holiday=>$eidulf2015}),
+    _jointlv     ({_expand_dm("24-12")}, {holiday=>$christmas}),
+];
+
 my @years     = sort keys %year_holidays;
 our $min_year = $years[0];
 our $max_year = $years[-1];
@@ -869,7 +897,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-This document describes version 0.21 of Calendar::Indonesia::Holiday (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-07-02.
+This document describes version 0.22 of Calendar::Indonesia::Holiday (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-08-06.
 
 =head1 SYNOPSIS
 
@@ -947,13 +975,13 @@ This module has L<Rinci> metadata.
 
 Count working days for a certain period.
 
-Working day is defined as day that is not SaturdayI</Sunday/holiday/joint leave
-days>. If workI<saturdays is set to true, Saturdays are also counted as working
-days. If observe>joint_leaves is set to false, joint leave days are also counted
+Working day is defined as day that is not Saturday*/Sunday/holiday/joint leave
+days*. If work_saturdays is set to true, Saturdays are also counted as working
+days. If observe_joint_leaves is set to false, joint leave days are also counted
 as working days.
 
-Contains data from years 2002 to 2014 (joint leave days until
-2014).
+Contains data from years 2002 to 2015 (joint leave days until
+2015).
 
 Arguments ('*' denotes required arguments):
 
@@ -993,19 +1021,21 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (any)
 
 
 =head2 enum_id_workdays(%args) -> [status, msg, result, meta]
 
 Enumerate working days for a certain period.
 
-Working day is defined as day that is not SaturdayI</Sunday/holiday/joint leave
-days>. If workI<saturdays is set to true, Saturdays are also counted as working
-days. If observe>joint_leaves is set to false, joint leave days are also counted
+Working day is defined as day that is not Saturday*/Sunday/holiday/joint leave
+days*. If work_saturdays is set to true, Saturdays are also counted as working
+days. If observe_joint_leaves is set to false, joint leave days are also counted
 as working days.
 
-Contains data from years 2002 to 2014 (joint leave days until
-2014).
+Contains data from years 2002 to 2015 (joint leave days until
+2015).
 
 Arguments ('*' denotes required arguments):
 
@@ -1045,6 +1075,8 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (any)
 
 
 =head2 list_id_holidays(%args) -> [status, msg, result, meta]
@@ -1053,8 +1085,8 @@ List Indonesian holidays in calendar.
 
 List holidays and joint leave days ("cuti bersama").
 
-Contains data from years 2002 to 2014 (joint leave days until
-2014).
+Contains data from years 2002 to 2015 (joint leave days until
+2015).
 
 Arguments ('*' denotes required arguments):
 
@@ -1469,6 +1501,8 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (any)
 
 =head1 FAQ
 

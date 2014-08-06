@@ -8,8 +8,8 @@ use Calendar::Indonesia::Holiday;
 use DateTime;
 use Perinci::CmdLine 1.06;
 
-our $VERSION = '0.21'; # VERSION
-our $DATE = '2014-07-02'; # DATE
+our $VERSION = '0.22'; # VERSION
+our $DATE = '2014-08-06'; # DATE
 
 our %SPEC;
 $SPEC{list_id_workdays} = {
@@ -69,7 +69,7 @@ list-id-workdays - List Indonesian workdays
 
 =head1 VERSION
 
-This document describes version 0.21 of list-id-workdays (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-07-02.
+This document describes version 0.22 of list-id-workdays (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-08-06.
 
 =head1 SYNOPSIS
 

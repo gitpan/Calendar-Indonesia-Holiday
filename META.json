@@ -64,7 +64,7 @@
          "web" : "https://github.com/sharyanto/perl-Calendar-Indonesia-Holiday"
       }
    },
-   "version" : "0.21",
+   "version" : "0.22",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018002"

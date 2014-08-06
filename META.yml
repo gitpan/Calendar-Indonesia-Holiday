@@ -33,7 +33,7 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Calendar-Indonesia-Holiday
   homepage: https://metacpan.org/release/Calendar-Indonesia-Holiday
   repository: git://github.com/sharyanto/perl-Calendar-Indonesia-Holiday.git
-version: '0.21'
+version: '0.22'
 x_Dist_Zilla:
   perl:
     version: '5.018002'

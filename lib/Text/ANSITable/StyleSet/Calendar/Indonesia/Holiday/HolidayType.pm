@@ -12,8 +12,8 @@ has holiday_fgcolor     => (is => 'rw');
 has joint_leave_bgcolor => (is => 'rw');
 has joint_leave_fgcolor => (is => 'rw');
 
-our $VERSION = '0.21'; # VERSION
-our $DATE = '2014-07-02'; # DATE
+our $VERSION = '0.22'; # VERSION
+our $DATE = '2014-08-06'; # DATE
 
 sub summary {
     "Set foreground and/or background color for different holiday types";
@@ -65,7 +65,7 @@ Text::ANSITable::StyleSet::Calendar::Indonesia::Holiday::HolidayType
 
 =head1 VERSION
 
-This document describes version 0.21 of Text::ANSITable::StyleSet::Calendar::Indonesia::Holiday::HolidayType (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-07-02.
+This document describes version 0.22 of Text::ANSITable::StyleSet::Calendar::Indonesia::Holiday::HolidayType (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-08-06.
 
 =for Pod::Coverage ^(summary|apply)$
 

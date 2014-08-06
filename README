@@ -2,9 +2,9 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    This document describes version 0.21 of Calendar::Indonesia::Holiday
+    This document describes version 0.22 of Calendar::Indonesia::Holiday
     (from Perl distribution Calendar-Indonesia-Holiday), released on
-    2014-07-02.
+    2014-08-06.
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -78,11 +78,11 @@ FUNCTIONS
     Count working days for a certain period.
 
     Working day is defined as day that is not Saturday*/Sunday/holiday/joint
-    leave days*. If work*saturdays is set to true, Saturdays are also
-    counted as working days. If observe*joint_leaves is set to false, joint
+    leave days*. If work_saturdays is set to true, Saturdays are also
+    counted as working days. If observe_joint_leaves is set to false, joint
     leave days are also counted as working days.
 
-    Contains data from years 2002 to 2014 (joint leave days until 2014).
+    Contains data from years 2002 to 2015 (joint leave days until 2015).
 
     Arguments ('*' denotes required arguments):
 
@@ -118,16 +118,18 @@ FUNCTIONS
     element (result) is optional, the actual result. Fourth element (meta)
     is called result metadata and is optional, a hash that contains extra
     information.
+
+     (any)
 
   enum_id_workdays(%args) -> [status, msg, result, meta]
     Enumerate working days for a certain period.
 
     Working day is defined as day that is not Saturday*/Sunday/holiday/joint
-    leave days*. If work*saturdays is set to true, Saturdays are also
-    counted as working days. If observe*joint_leaves is set to false, joint
+    leave days*. If work_saturdays is set to true, Saturdays are also
+    counted as working days. If observe_joint_leaves is set to false, joint
     leave days are also counted as working days.
 
-    Contains data from years 2002 to 2014 (joint leave days until 2014).
+    Contains data from years 2002 to 2015 (joint leave days until 2015).
 
     Arguments ('*' denotes required arguments):
 
@@ -163,13 +165,15 @@ FUNCTIONS
     element (result) is optional, the actual result. Fourth element (meta)
     is called result metadata and is optional, a hash that contains extra
     information.
+
+     (any)
 
   list_id_holidays(%args) -> [status, msg, result, meta]
     List Indonesian holidays in calendar.
 
     List holidays and joint leave days ("cuti bersama").
 
-    Contains data from years 2002 to 2014 (joint leave days until 2014).
+    Contains data from years 2002 to 2015 (joint leave days until 2015).
 
     Arguments ('*' denotes required arguments):
 
@@ -655,6 +659,8 @@ FUNCTIONS
     element (result) is optional, the actual result. Fourth element (meta)
     is called result metadata and is optional, a hash that contains extra
     information.
+
+     (any)
 
 FAQ
   What is "joint leave"?
