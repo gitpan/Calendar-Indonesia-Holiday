@@ -2,9 +2,9 @@ NAME
     Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 VERSION
-    This document describes version 0.22 of Calendar::Indonesia::Holiday
+    This document describes version 0.23 of Calendar::Indonesia::Holiday
     (from Perl distribution Calendar-Indonesia-Holiday), released on
-    2014-08-06.
+    2014-08-16.
 
 SYNOPSIS
      use Calendar::Indonesia::Holiday qw(
@@ -648,6 +648,30 @@ FUNCTIONS
 
         Only return records where the 'year' field is greater than specified
         value.
+
+    Return value:
+
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
+
+     (any)
+
+  list_id_workdays(%args) -> [status, msg, result, meta]
+    Arguments ('*' denotes required arguments):
+
+    *   end_date => *str*
+
+    *   month => *int*
+
+    *   start_date => *str*
+
+    *   year => *int*
 
     Return value:
 

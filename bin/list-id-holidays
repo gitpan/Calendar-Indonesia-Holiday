@@ -1,22 +1,25 @@
 #!perl
 
-use 5.010;
+# Note: This script is a CLI interface to Riap function /Calendar/Indonesia/Holiday/list_id_holidays
+# and generated automatically using Dist::Zilla::Plugin::Rinci::ScriptFromFunc version 0.01
+
+our $DATE = '2014-08-16'; # DATE
+our $VERSION = '0.23'; # VERSION
+
+use 5.010001;
 use strict;
 use warnings;
 
-use Calendar::Indonesia::Holiday; # for when fatpacked
-use Perinci::CmdLine 1.06;
+use Perinci::CmdLine::Any;
 
-our $VERSION = '0.22'; # VERSION
-our $DATE = '2014-08-06'; # DATE
-
+# snippet_before_instantiate_cmdline
 $ENV{ANSITABLE_STYLE_SETS} //= '[["Calendar::Indonesia::Holiday::HolidayType",{"holiday_bgcolor":"330000", "joint_leave_bgcolor":"333300"}]]';
 
-Perinci::CmdLine->new(url => '/Calendar/Indonesia/Holiday/list_id_holidays')->
-    run;
+Perinci::CmdLine::Any->new(
+    url => "/Calendar/Indonesia/Holiday/list_id_holidays",
+)->run;
 
-1;
-# ABSTRACT: List Indonesian holidays
+# ABSTRACT: List Indonesian holidays in calendar
 # PODNAME: list-id-holidays
 
 __END__
@@ -27,24 +30,36 @@ __END__
 
 =head1 NAME
 
-list-id-holidays - List Indonesian holidays
+list-id-holidays - List Indonesian holidays in calendar
 
 =head1 VERSION
 
-This document describes version 0.22 of list-id-holidays (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-08-06.
+This document describes version 0.23 of list-id-holidays (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-08-16.
 
 =head1 SYNOPSIS
 
- # List Indonesian holidays for year 2011 (without the joint leaves)
- $ list-id-holidays --detail --nois-joint-leave 2011
+Usage:
 
- # Show available options
- $ list-id-holidays --help
+ % list-id-holidays
+
+Examples:
+
+ TODO
+
+To see all options:
+
+ % list-id-holidays --help
 
 =head1 DESCRIPTION
 
-This is a command-line interface for the C<list_id_holidays> function in
-L<Calendar::Indonesia::Holiday>.
+List holidays and joint leave days ("cuti bersama").
+
+Contains data from years 2002 to 2015 (joint leave days until
+2015).
+
+=head1 OPTIONS
+
+ TODO
 
 =head1 HOMEPAGE
 

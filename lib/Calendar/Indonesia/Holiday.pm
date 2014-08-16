@@ -19,8 +19,8 @@ our @EXPORT_OK = qw(
                        count_id_workdays
                );
 
-our $VERSION = '0.22'; # VERSION
-our $DATE = '2014-08-06'; # DATE
+our $VERSION = '0.23'; # VERSION
+our $DATE = '2014-08-16'; # DATE
 
 our %SPEC;
 my @fixed_holidays = (
@@ -882,6 +882,45 @@ gen_modified_sub(
     },
 );
 
+$SPEC{list_id_workdays} = {
+    v => 1.1,
+    summary => '',
+    args => {
+        year       => {schema=>'int*'},
+        month      => {schema=>['int*', between=>[1, 12]]},
+        start_date => {schema=>'str*'},
+        end_date   => {schema=>'str*'},
+    },
+};
+sub list_id_workdays {
+    my %args = @_;
+
+    my %fargs;
+    my $y = $args{year};
+    my $m = $args{month};
+    if ($y) {
+        if ($m) {
+            $fargs{start_date} = DateTime->new(year=>$y, month=>$m, day=>1);
+            $m++; if ($m == 13) { $m=1; $y++ }
+            $fargs{end_date} = DateTime->new(year=>$y, month=>$m, day=>1)
+                ->subtract(days => 1);
+        } else {
+            $fargs{start_date} = DateTime->new(year=>$y, month=>1, day=>1);
+            $fargs{end_date} = DateTime->new(year=>$y+1, month=>1, day=>1)
+                ->subtract(days => 1);
+        }
+    }
+
+    if ($args{start_date}) {
+        $fargs{start_date} = $fargs{start_date};
+    }
+    if ($args{end_date}) {
+        $fargs{end_date} = $fargs{end_date};
+    }
+
+    Calendar::Indonesia::Holiday::enum_id_workdays(%fargs);
+}
+
 1;
 # ABSTRACT: List Indonesian public holidays
 
@@ -897,7 +936,7 @@ Calendar::Indonesia::Holiday - List Indonesian public holidays
 
 =head1 VERSION
 
-This document describes version 0.22 of Calendar::Indonesia::Holiday (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-08-06.
+This document describes version 0.23 of Calendar::Indonesia::Holiday (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-08-16.
 
 =head1 SYNOPSIS
 
@@ -1488,6 +1527,36 @@ Only return records where the 'year' field is less than specified value.
 =item * B<year.xmin> => I<int>
 
 Only return records where the 'year' field is greater than specified value.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+ (any)
+
+
+=head2 list_id_workdays(%args) -> [status, msg, result, meta]
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<end_date> => I<str>
+
+=item * B<month> => I<int>
+
+=item * B<start_date> => I<str>
+
+=item * B<year> => I<int>
 
 =back
 

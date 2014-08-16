@@ -1,60 +1,25 @@
 #!perl
 
-use 5.010;
+# Note: This script is a CLI interface to Riap function /Calendar/Indonesia/Holiday/list_id_workdays
+# and generated automatically using Dist::Zilla::Plugin::Rinci::ScriptFromFunc version 0.01
+
+our $DATE = '2014-08-16'; # DATE
+our $VERSION = '0.23'; # VERSION
+
+use 5.010001;
 use strict;
 use warnings;
 
-use Calendar::Indonesia::Holiday;
-use DateTime;
-use Perinci::CmdLine 1.06;
+use Perinci::CmdLine::Any;
 
-our $VERSION = '0.22'; # VERSION
-our $DATE = '2014-08-06'; # DATE
+# snippet_before_instantiate_cmdline
+$ENV{ANSITABLE_STYLE_SETS} //= '[["Calendar::Indonesia::Holiday::HolidayType",{"holiday_bgcolor":"330000", "joint_leave_bgcolor":"333300"}]]';
 
-our %SPEC;
-$SPEC{list_id_workdays} = {
-    v => 1.1,
-    summary => '',
-    args => {
-        year       => {schema=>'int*'},
-        month      => {schema=>['int*', between=>[1, 12]]},
-        start_date => {schema=>'str*'},
-        end_date   => {schema=>'str*'},
-    },
-};
-sub list_id_workdays {
-    my %args = @_;
+Perinci::CmdLine::Any->new(
+    url => "/Calendar/Indonesia/Holiday/list_id_workdays",
+)->run;
 
-    my %fargs;
-    my $y = $args{year};
-    my $m = $args{month};
-    if ($y) {
-        if ($m) {
-            $fargs{start_date} = DateTime->new(year=>$y, month=>$m, day=>1);
-            $m++; if ($m == 13) { $m=1; $y++ }
-            $fargs{end_date} = DateTime->new(year=>$y, month=>$m, day=>1)
-                ->subtract(days => 1);
-        } else {
-            $fargs{start_date} = DateTime->new(year=>$y, month=>1, day=>1);
-            $fargs{end_date} = DateTime->new(year=>$y+1, month=>1, day=>1)
-                ->subtract(days => 1);
-        }
-    }
-
-    if ($args{start_date}) {
-        $fargs{start_date} = $fargs{start_date};
-    }
-    if ($args{end_date}) {
-        $fargs{end_date} = $fargs{end_date};
-    }
-
-    Calendar::Indonesia::Holiday::enum_id_workdays(%fargs);
-}
-
-Perinci::CmdLine->new(url => '/main/list_id_workdays')->run;
-
-1;
-# ABSTRACT: List Indonesian workdays
+# ABSTRACT: 
 # PODNAME: list-id-workdays
 
 __END__
@@ -65,18 +30,31 @@ __END__
 
 =head1 NAME
 
-list-id-workdays - List Indonesian workdays
+list-id-workdays -  
 
 =head1 VERSION
 
-This document describes version 0.22 of list-id-workdays (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-08-06.
+This document describes version 0.23 of list-id-workdays (from Perl distribution Calendar-Indonesia-Holiday), released on 2014-08-16.
 
 =head1 SYNOPSIS
 
- $ list-id-workdays 2011
+Usage:
 
- # Show available options
- $ list-id-holidays --help
+ % list-id-workdays
+
+Examples:
+
+ TODO
+
+To see all options:
+
+ % list-id-workdays --help
+
+=head1 DESCRIPTION
+
+=head1 OPTIONS
+
+ TODO
 
 =head1 HOMEPAGE
 
